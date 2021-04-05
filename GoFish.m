@@ -53,7 +53,6 @@ c2 = randi(length(Deck),3);
 CP_cards = Deck(c2); %Generate matrix of 9 different cards
 Deck(c2) = [];
 
+table = imread('table.jpg'); % elevator going up
+imageTexture_table = Screen('MakeTexture', window, table);
 
-% add another player later
-
-%print("instructions") 
