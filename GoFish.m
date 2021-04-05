@@ -1,6 +1,24 @@
-%Clear everything
-clc
+% Clears command window, workspace, and variables
+sca;
+close all;
+clc;
+clearvars;
 Deck = [];
+Screen('Preference', 'SkipSyncTests',1);
+
+% sets up screens
+PsychDefaultSetup(2);
+screens = Screen('Screens');
+screenNumber = max(screens);
+white = WhiteIndex(screenNumber);
+black = BlackIndex(screenNumber);
+grey = white / 2;
+[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey);
+%variables for flipping
+[~, ~] = Screen('WindowSize', window);
+ifi = Screen('GetFlipInterval', window);
+rr = FrameRate(window);
+
 
 % create card 'stack' that is row vector of card values 
 Deck = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" ]; %Generate matrix of 52 cards
@@ -26,7 +44,6 @@ for n= 1:9
         Your_cards(n) = "K";
     end 
 end 
-disp(Your_cards)
 Your_cards_str = mat2str(Your_cards);
 disp(strcat('your cards are', Your_cards_str));
 Deck(c1) = [];
