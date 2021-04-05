@@ -59,4 +59,7 @@ Deck(c2) = [];
 ifi = Screen('GetFlipInterval', window);
 table = imread('table.jpeg'); % table background
 imageTexture_table = Screen('MakeTexture', window, table);
+Screen('DrawTexture', window, imageTexture_table, [], [], 0); % Sets up image of an elevator going up
+Screen('Flip', window); % Flips to the image of an elevator going up.
+WaitSecs(3)
 
