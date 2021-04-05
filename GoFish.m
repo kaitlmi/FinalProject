@@ -28,8 +28,6 @@ Deck(:);
 Deck = reshape(Deck, 1, []);
 
 % deal cards
-%numplayers = 2
-%for 1:numplayers
 c1 = randi(length(Deck),3);
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
 Your_cards_num = str2double(Deck(c1)); %creates numerical matrix of cards
@@ -53,6 +51,12 @@ c2 = randi(length(Deck),3);
 CP_cards = Deck(c2); %Generate matrix of 9 different cards
 Deck(c2) = [];
 
-table = imread('table.jpg'); % elevator going up
+% Opening a black window
+[window, windowRect] = PsychImaging('OpenWindow', screenNumber, black);
+% Getting the size of the on screen window
+[screenXpixels, screenYpixels] = Screen('WindowSize', window);
+% Getting flip interval
+ifi = Screen('GetFlipInterval', window);
+table = imread('table.jpeg'); % table background
 imageTexture_table = Screen('MakeTexture', window, table);
 
