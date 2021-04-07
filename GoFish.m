@@ -18,7 +18,17 @@ grey = white / 2;
 [~, ~] = Screen('WindowSize', window);
 ifi = Screen('GetFlipInterval', window);
 rr = FrameRate(window);
-
+% Opening a black window
+[window, windowRect] = PsychImaging('OpenWindow', screenNumber, black);
+% Getting the size of the on screen window
+[screenXpixels, screenYpixels] = Screen('WindowSize', window);
+% Getting flip interval
+ifi = Screen('GetFlipInterval', window);
+table = imread('table.jpeg'); % table background
+imageTexture_table = Screen('MakeTexture', window, table);
+Screen('DrawTexture', window, imageTexture_table, [], [], 0); % Sets up image of an elevator going up
+Screen('Flip', window); % Flips to the image of an elevator going up.
+WaitSecs(3)
 
 % create card 'stack' that is row vector of card values 
 Deck = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" ]; %Generate matrix of 52 cards
@@ -51,15 +61,4 @@ c2 = randi(length(Deck),3);
 CP_cards = Deck(c2); %Generate matrix of 9 different cards
 Deck(c2) = [];
 
-% Opening a black window
-[window, windowRect] = PsychImaging('OpenWindow', screenNumber, black);
-% Getting the size of the on screen window
-[screenXpixels, screenYpixels] = Screen('WindowSize', window);
-% Getting flip interval
-ifi = Screen('GetFlipInterval', window);
-table = imread('table.jpeg'); % table background
-imageTexture_table = Screen('MakeTexture', window, table);
-Screen('DrawTexture', window, imageTexture_table, [], [], 0); % Sets up image of an elevator going up
-Screen('Flip', window); % Flips to the image of an elevator going up.
-WaitSecs(3)
 
