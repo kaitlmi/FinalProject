@@ -37,7 +37,7 @@ for games_played=1:steps
             Computer(j,games_played+1)=Computer(j+1,games_played+1);
             Human(j,games_played+1)=Human(j+1,games_played+1);
         end
-        win_computer=win_computer+1;                          %add point to winner's tally 
+        win_computer=win_computer+1;                          %add point to winner's score 
         
         Computer(:,games_played+1)=Computer(:,games_played);          %START NEXT ROUND
         Human(:,games_played+1)=Human(:,games_played);
