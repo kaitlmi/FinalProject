@@ -26,9 +26,11 @@ rr = FrameRate(window);
 ifi = Screen('GetFlipInterval', window);
 table = imread('table.jpeg'); % table background
 imageTexture_table = Screen('MakeTexture', window, table);
-Screen('DrawTexture', window, imageTexture_table, [], [], 0); % Sets up image of an elevator going up
-Screen('Flip', window); % Flips to the image of an elevator going up.
+Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up image of table
+Screen('Flip', window); % Flips to the image of table
 WaitSecs(3)
+DrawFormattedText(window, 'Here are your cards.', 'center', 'center', white);
+Screen('Flip', window);
 
 % create card 'stack' that is row vector of card values 
 Deck = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" ]; %Generate matrix of 52 cards
