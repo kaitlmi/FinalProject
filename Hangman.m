@@ -14,11 +14,12 @@ black = BlackIndex(screenNumber);
 % Setting up Text Size
 Screen('TextSize', window, 70);
 
+% Setting up certain keys on the keyboard. 
 KbName('UnifyKeyNames')
-escapeKey = KbName('Escape');
 oneKey = KbName('1!');
 twoKey = KbName('2@');
 threeKey = KbName('3#');
+
 % Getting the size of the screen
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
@@ -79,7 +80,8 @@ while move_forward == false
     end
 end
 
-Puzzle_Number = randperm(9);
+clc;
+Puzzle_Number = randperm(9,3);
 round = 1;
 placement = 1;
 while round <= 3
@@ -105,7 +107,9 @@ while round <= 3
     end
     
     Puzzle_spaces = num2cell(Puzzle);
+    Puzzle_letters = cell2mat(Puzzle_spaces);
     Puzzle_spaces = cell2mat(Puzzle_spaces);
+    
     for ii = 1:length(Puzzle_spaces)
         if Puzzle_spaces(ii) == ' '
             Puzzle_spaces(ii) = ' ';
@@ -113,14 +117,53 @@ while round <= 3
             Puzzle_spaces(ii) = '-';
         end
     end
-
+    
+    
 
     % Drawing the hangman noose
     Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
     Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
     Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.30*screenYpixels], 5);
     DrawFormattedText(window, Puzzle_spaces,.10*screenXpixels, 'center', white);
+    DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
     Screen('Flip', window);
+    KbStrokeWait;
+    
+    guessing_done = 0;   
+    Puzzle_spaces_new = Puzzle_spaces;
+    while guessing_done <=5
+        FlushEvents;
+        ch = GetChar;
+        clc;
+        for jj = 1:length(Puzzle_letters)
+            if ch == Puzzle_letters(jj)
+                Puzzle_spaces_new(jj) = ch;
+            end
+        end
+        
+        if Puzzle_spaces_new == Puzzle_spaces
+            guessing_done = guessing_done + 1;
+            DrawFormattedText(window, 'Wrong Letter', 'center', 'center', white);
+            Screen('Flip', window);
+            WaitSecs(2);           
+            Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
+            Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
+            Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.30*screenYpixels], 5);
+            DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
+            DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
+            Screen('Flip', window);       
+            KbWait;
+        else           
+            Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
+            Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
+            Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.30*screenYpixels], 5);
+            DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
+            DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
+            Screen('Flip', window);         
+            KbWait;
+        end
+        
+    end
     
     placement = placement + 1;
     round = round + 1;
