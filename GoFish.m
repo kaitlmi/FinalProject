@@ -43,6 +43,15 @@ Deck = reshape(Deck, 1, []);
 c1 = randi(length(Deck),3);
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
 Your_cards_num = str2double(Deck(c1)); %creates numerical matrix of cards
+for n = 1:9
+    if Your_cards_num(n) <= 13 
+        Your_cards_num == "clubs"
+    elseif Your_cards_num(n) >= 14 && Your_cards_num(n) <= 26
+        Your_cards_num == "hearts"
+    elseif Your_cards_num(n) >= 27  
+        Your_cards_num == "diamonds"
+    else 
+        Your_cards_num == "spades"
 for n= 1:9
     if Your_cards(n) == "1"
         Your_cards(n) = "Ace";
@@ -54,6 +63,7 @@ for n= 1:9
         Your_cards(n) = "K";
     end 
 end 
+
 Your_cards_str = mat2str(Your_cards);
 disp(strcat('your cards are', Your_cards_str));
 Deck(c1) = [];
