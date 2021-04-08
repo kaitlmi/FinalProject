@@ -81,8 +81,20 @@ disp(strcat('your cards are', Your_cards_str));
 Deck(c1) = [];
 disp(Your_cards_suit)
 
+YourCards =  strings;
+for n = 1:10
+    if mod(n,2) == 1 
+        YourCards(n) = Your_cards_str((n*2)-1);  
+    else
+        YourCards(n) = Your_cards_suit(n/2);
+    end
+end
+
+disp(YourCards)
+
 c2 = randperm(length(Deck),5);
 CP_cards = Deck(c2); %Generate matrix of 5 different cards
 Deck(c2) = [];
+disp(CP_cards);
 
 
