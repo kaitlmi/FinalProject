@@ -38,11 +38,11 @@ Deck = repmat(Deck, 1, 4);
 Deck = Deck';
 Deck(:);
 Deck = reshape(Deck, 1, []);
-
-% deal cards
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% deal cards %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% YOUR CARDS 
 c1 = randperm(length(Deck),5);
-disp(c1)
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
 Your_cards_num = str2double(Deck(c1)); %creates numerical matrix of cards
 Your_cards_suit = strings; %initializes suit matrix
@@ -75,11 +75,37 @@ for n= 1:5 %Substitutes values for actual cards
 end 
 YourCards = append(Your_cards,Your_cards_suit);
 disp(YourCards)
-
-
+%%%%% CP CARDS 
 c2 = randperm(length(Deck),5);
 CP_cards = Deck(c2); %Generate matrix of 5 different cards
-Deck(c2) = [];
-disp(CP_cards);
-
+CP_cards_num = str2double(Deck(c2)); %creates numerical matrix of cards
+CP_cards_suit = strings; %initializes suit matrix
+CP_cards_str = strings; %creates string of cards 
+for n= 1:5
+    CP_cards_str(n) = num2str(CP_cards_num(n));
+end
+Deck(c2) = []; %removes cards from the deck so there are no repeats
+for n = 1:5 %for creating a matrix of suits 
+    if c2(n) <= 13 
+        CP_cards_suit(n) = "clubs";
+    elseif c2(n) >= 14 && c2(n) <= 26
+        CP_cards_suit(n) = "hearts";
+    elseif c2(n) >= 27 && c2(n) <= 39 
+        CP_cards_suit(n) = "diamonds";
+    else 
+        CP_cards_suit(n) = "spades";
+    end
+end
+for n= 1:5 %Substitutes values for actual cards
+    if CP_cards(n) == "1"
+        CP_cards(n) = "Ace";
+    elseif CP_cards(n) == "11"
+        CP_cards(n) = "J";
+    elseif CP_cards(n) == "12"
+        CP_cards(n) = "Q";
+    elseif CP_cards(n) == "13"
+        CP_cards(n) = "K";
+    end 
+end 
+CPCards = append(CP_cards,CP_cards_suit);
 
