@@ -38,21 +38,19 @@ Deck = repmat(Deck, 1, 4);
 Deck = Deck';
 Deck(:);
 Deck = reshape(Deck, 1, []);
-
-Deck = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" ]; %Generate matrix of 52 cards
-Deck = repmat(Deck, 1, 4);
-Deck = Deck';
-Deck(:);
-Deck = reshape(Deck, 1, []);
-
-% deal cards
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% deal cards %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% YOUR CARDS 
 c1 = randperm(length(Deck),5);
-disp(c1)
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
 Your_cards_num = str2double(Deck(c1)); %creates numerical matrix of cards
-Your_cards_suit = strings;
-disp(Your_cards_num)
-disp(Your_cards)
+Your_cards_suit = strings; %initializes suit matrix
+Your_cards_str = strings; %creates string of cards 
+for n= 1:5
+    Your_cards_str(n) = num2str(Your_cards_num(n));
+end
+Deck(c1) = []; %removes cards from the deck so there are no repeats
 for n = 1:5 %for creating a matrix of suits 
     if c1(n) <= 13 
         Your_cards_suit(n) = "clubs";
@@ -75,14 +73,88 @@ for n= 1:5 %Substitutes values for actual cards
         Your_cards(n) = "K";
     end 
 end 
-
-Your_cards_str = mat2str(Your_cards);
-disp(strcat('your cards are', Your_cards_str));
-Deck(c1) = [];
-disp(Your_cards_suit)
-
+YourCards = append(Your_cards,Your_cards_suit); %YourCards used to cue visuals
+disp(YourCards)
+%%%%% CP CARDS 
 c2 = randperm(length(Deck),5);
 CP_cards = Deck(c2); %Generate matrix of 5 different cards
-Deck(c2) = [];
+CP_cards_num = str2double(Deck(c2)); %creates numerical matrix of cards
+CP_cards_suit = strings; %initializes suit matrix
+CP_cards_str = strings; %creates string of cards 
+for n= 1:5
+    CP_cards_str(n) = num2str(CP_cards_num(n));
+end
+Deck(c2) = []; %removes cards from the deck so there are no repeats
+for n = 1:5 %for creating a matrix of suits 
+    if c2(n) <= 13 
+        CP_cards_suit(n) = "clubs";
+    elseif c2(n) >= 14 && c2(n) <= 26
+        CP_cards_suit(n) = "hearts";
+    elseif c2(n) >= 27 && c2(n) <= 39 
+        CP_cards_suit(n) = "diamonds";
+    else 
+        CP_cards_suit(n) = "spades";
+    end
+end
+for n= 1:5 %Substitutes values for actual cards
+    if CP_cards(n) == "1"
+        CP_cards(n) = "Ace";
+    elseif CP_cards(n) == "11"
+        CP_cards(n) = "J";
+    elseif CP_cards(n) == "12"
+        CP_cards(n) = "Q";
+    elseif CP_cards(n) == "13"
+        CP_cards(n) = "K";
+    end 
+end 
+CPCards = append(CP_cards,CP_cards_suit);
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% ACTUAL GAME CODE %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+while length(YourCards) > 0 && length(CPCards) > 0 
+%%% Your turn%%%%
+    for n = 1: length(CP_cards_num) 
+        if input == CP_cards_num(n) % input is same
+            YourPoints = YourPoints + 1;
+            CP_cards_num(n)  = [];
+            CP_cards_str(n) = [];
+            CP_cards_suit(n) = [];
+            CP_cards(n) = [];
+            CPCards(n) = [];
+            Index_input = find(Your_cards_num == input);
+            Your_cards_num(Index_input) = [];
+            Your_cards_str(Index_input) = [];
+            Your_cards_suit(Index_input) = [];
+            Your_cards(Index_input) = [];
+            YourCards(Index_input) = [];
+        else %input is different 
+            disp('go fish') %% PTB text overlay%%
+            cd = randperm(length(Deck),1)
+            New_card = Deck(cd);
+            Your_cards = [Your_cards New_card] %concat deck w new card
+            Your_cards_num = str2double(Your_cards);
+            Your_cards_str(n) = num2str(Your_cards_num(n));
+            Deck(cd) = [];
+            if cd(1) <= 13 %record new card's suit
+                Your_cards_suit(length(Your_cards_suit)+1) = "clubs";
+            elseif cd(1) >= 14 && cd(1) <= 26
+                Your_cards_suit(length(Your_cards_suit)+1) = "hearts";
+            elseif cd(n) >= 27 && cd(n) <= 39 
+                Your_cards_suit(length(Your_cards_suit)+1) = "diamonds";
+            else 
+                Your_cards_suit(length(Your_cards_suit)+1) = "spades";
+            end
+            if Your_cards(length(Your_cards)) == "1" %change new card format if face card
+                Your_cards(length(Your_cards)) = "Ace";
+            elseif Your_cards(length(Your_cards)) == "11"
+                Your_cards(length(Your_cards)) = "J";
+            elseif Your_cards(length(Your_cards)) == "12"
+                Your_cards(length(Your_cards)) = "Q";
+            elseif Your_cards(length(Your_cards)) == "13"
+                Your_cards(length(Your_cards)) = "K";
+            end 
+        YourCards = append(Your_cards,Your_cards_suit)
+        end
+    end
+end 
