@@ -39,20 +39,18 @@ Deck = Deck';
 Deck(:);
 Deck = reshape(Deck, 1, []);
 
-Deck = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13" ]; %Generate matrix of 52 cards
-Deck = repmat(Deck, 1, 4);
-Deck = Deck';
-Deck(:);
-Deck = reshape(Deck, 1, []);
-
 % deal cards
 c1 = randperm(length(Deck),5);
 disp(c1)
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
 Your_cards_num = str2double(Deck(c1)); %creates numerical matrix of cards
-Your_cards_suit = strings;
-disp(Your_cards_num)
-disp(Your_cards)
+Your_cards_suit = strings; %initializes suit matrix
+Your_cards_str = strings; %creates string of cards 
+for n= 1:5
+    Your_cards_str(n) = num2str(Your_cards_num(n));
+end
+Deck(c1) = []; %removes cards from the deck so there are no repeats
+
 for n = 1:5 %for creating a matrix of suits 
     if c1(n) <= 13 
         Your_cards_suit(n) = "clubs";
@@ -64,6 +62,17 @@ for n = 1:5 %for creating a matrix of suits
         Your_cards_suit(n) = "spades";
     end
 end
+
+YourCards =  strings;
+
+for n = 1:10
+    if mod(n,2) == 1 
+        YourCards(n) = Your_cards_str((n+1)/2);  
+    else
+        YourCards(n) = Your_cards_suit(n/2);
+    end
+end
+
 for n= 1:5 %Substitutes values for actual cards
     if Your_cards(n) == "1"
         Your_cards(n) = "Ace";
@@ -76,21 +85,8 @@ for n= 1:5 %Substitutes values for actual cards
     end 
 end 
 
-Your_cards_str = mat2str(Your_cards);
-disp(strcat('your cards are', Your_cards_str));
-Deck(c1) = [];
-disp(Your_cards_suit)
-
-YourCards =  strings;
-for n = 1:10
-    if mod(n,2) == 1 
-        YourCards(n) = Your_cards_str((n*2)-1);  
-    else
-        YourCards(n) = Your_cards_suit(n/2);
-    end
-end
-
 disp(YourCards)
+
 
 c2 = randperm(length(Deck),5);
 CP_cards = Deck(c2); %Generate matrix of 5 different cards
