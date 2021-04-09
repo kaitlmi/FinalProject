@@ -66,15 +66,15 @@ while move_forward == false
         move_forward = true;
     elseif keyCode(threeKey)
         % Setting up the Puzzles
-        Puzzle_1 = 'Taylor Swift';  
-        Puzzle_2 = 'Cardi B';                               
-        Puzzle_3 = 'Katy Perry';   
-        Puzzle_4 = 'Billie Eilish';                       
-        Puzzle_5 = 'Marshmello';                              
-        Puzzle_6 = 'Post Malone';                       
-        Puzzle_7 = 'Ariana Grande';  
-        Puzzle_8 = 'Selena Gomez';               
-        Puzzle_9 = 'Travis Scott';          
+        Puzzle_1 = 'taylor swift';  
+        Puzzle_2 = 'cardi b';                               
+        Puzzle_3 = 'katy perry';   
+        Puzzle_4 = 'billie eilish';                       
+        Puzzle_5 = 'marshmello';                              
+        Puzzle_6 = 'post malone';                       
+        Puzzle_7 = 'ariana grande';  
+        Puzzle_8 = 'selena gomez';               
+        Puzzle_9 = 'travis scott';          
         
         move_forward = true;
     end
@@ -84,6 +84,7 @@ clc;
 Puzzle_Number = randperm(9,3);
 round = 1;
 placement = 1;
+rounds_won = 0;
 while round <= 3
     
     if Puzzle_Number(placement) == 1
@@ -120,22 +121,29 @@ while round <= 3
       
     guess_wrong = 0;   
     Puzzle_spaces_new = Puzzle_spaces;
+    string = 'Guessed:';
     Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
     Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
     Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
     DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
     DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
-    Screen('Flip', window); 
+    DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);
+    Screen('Flip', window);
+   
     while guess_wrong <= 6              
         FlushEvents;
         ch = GetKbChar;
+        string = append(string, ch);
         for jj = 1:length(Puzzle_letters)
             if ch == Puzzle_letters(jj)
                 Puzzle_spaces_new(jj) = ch;                
             end
         end
         
+        
+        
         if Puzzle_spaces_new == Puzzle_letters
+            rounds_won = rounds_won + 1;
             DrawFormattedText(window, 'Good job! You guessed the clue!', 'center', 'center', white);
             Screen('Flip', window);
             WaitSecs(3);
@@ -150,7 +158,8 @@ while round <= 3
             Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
             Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
             DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
-            DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white)            
+            DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);  
+            DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);
             if guess_wrong == 1               
                 Screen('DrawDots', window, [0.5*screenXpixels 0.45*screenYpixels],130, white);
                 Screen('Flip', window);
@@ -189,8 +198,7 @@ while round <= 3
                 Screen('Flip', window);
                 WaitSecs(2);
                 guess_wrong = guess_wrong + 1;
-              
-                
+                             
             end
         else            
             Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
@@ -198,7 +206,16 @@ while round <= 3
             Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
             DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
             DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
-            if guess_wrong == 1               
+            DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);
+            if guess_wrong == 0
+                Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
+                Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
+                Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
+                DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
+                DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
+                DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);
+                Screen('Flip', window);
+            elseif guess_wrong == 1               
                 Screen('DrawDots', window, [0.5*screenXpixels 0.45*screenYpixels],130, white);
                 Screen('Flip', window);
             elseif guess_wrong == 2
@@ -224,47 +241,15 @@ while round <= 3
                 Screen('DrawLines', window, [0.45*screenXpixels, 0.5*screenXpixels ; 0.9*screenYpixels, 0.8*screenYpixels], 5);
                 Screen('Flip', window);               
             end
+            Puzzle_spaces = Puzzle_spaces_new;
         end
-        Puzzle_spaces = Puzzle_spaces_new;      
-    end
-        
-%         
-%         if Puzzle_spaces_new == Puzzle_spaces
-%             guessing_done = guessing_done + 1;
-%             DrawFormattedText(window, 'Wrong Letter', 'center', 'center', white);
-%             Screen('Flip', window);
-%             WaitSecs(2);           
-%             Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
-%             Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
-%             Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.30*screenYpixels], 5);
-%             DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
-%             DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
-%             Screen('Flip', window);       
-%             KbStrokeWait;
-%         elseif Puzzle_spaces_new ~= Puzzle_spaces          
-%             Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
-%             Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
-%             Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.30*screenYpixels], 5);
-%             DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
-%             DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
-%             Screen('Flip', window);
-%             Puzzle_spaces_new = Puzzle_spaces;
-%             KbStrokeWait;
-%         elseif Puzzle_spaces_new == Puzzle_letters
-%             Screen('DrawLines', window, [0.5*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
-%             Screen('DrawLines', window, [0.8*screenXpixels, 0.8*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
-%             Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.25*screenYpixels, 0.30*screenYpixels], 5);
-%             DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
-%             DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
-%             Screen('Flip', window);           
-%             guessing_done = 6;
-%             DrawFormattedText(window, 'Nice Job! You beat the computer!', 'center', 'center', white);
-%             Screen('Flip', window);
-%             KbStrokeWait;
-%             
+           
+    end           
            
     placement = placement + 1;
     round = round + 1;
+    
     KbStrokeWait;
+   
 end
 sca;
