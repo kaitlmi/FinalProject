@@ -114,45 +114,46 @@ CPCards = append(CP_cards,CP_cards_suit);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 while length(YourCards) > 0 && length(CPCards) > 0 
 %%% Your turn%%%%
-for n = 1: length(CP_cards_num) 
-    if input = CP_cards_num(n)
-        YourPoints = YourPoints + 1;
-        CP_cards_num(n)  = [ ];
-        CP_cards_str(n) = [ ];
-        CP_cards_suit(n) = [ ];
-        CP_cards(n) = [ ];
-        CPCards(n) = [ ];
-        Index_input = find(Your_cards_num == input);
-        Your_cards_num(Index_input) = [ ];
-        Your_cards_str(Index_input) = [ ];
-        Your_cards_suit(Index_input) = [ ];
-        Your_cards(Index_input) = [ ];
-        YourCards(Index_input) = [ ];
-    else
-        disp(' go fish') %% PTB text overlay%%
-        cd =  randperm(length(Deck),1
-        Your_cards = [Your_cards cd)] %concat deck w new card
-        Your_cards_num = str2double(Deck(c1));
-        Your_cards_str(n) = num2str(Your_cards_num(n));
-        Deck(cd) = [ ];
-        if cd(1) <= 13 
-            Your_cards_suit(length(Your_cards_suit)) = "clubs";
-   		elseif cd(1) >= 14 && cd(1) <= 26
-            Your_cards_suit(length(Your_cards_suit)) = "hearts";
-        elseif cd(n) >= 27 && cd(n) <= 39 
-            Your_cards_suit(length(Your_cards_suit)) = "diamonds";
-        else 
-            Your_cards_suit(length(Your_cards_suit)) = "spades";
-        end
-        if Your_cards(length(Your_cards)) == "1"
-            Your_cards(length(Your_cards)) = "Ace";
-        elseif Your_cards(length(Your_cards)) == "11"
-            Your_cards(length(Your_cards)) = "J";
-        elseif Your_cards(length(Your_cards)) == "12"
-            Your_cards(length(Your_cards)) = "Q";
-        elseif Your_cards(length(Your_cards)) == "13"
-            Your_cards(length(Your_cards)) = "K";
-        end 
+    for n = 1: length(CP_cards_num) 
+        if input == CP_cards_num(n) % input is same
+            YourPoints = YourPoints + 1;
+            CP_cards_num(n)  = [ ];
+            CP_cards_str(n) = [ ];
+            CP_cards_suit(n) = [ ];
+            CP_cards(n) = [ ];
+            CPCards(n) = [ ];
+            Index_input = find(Your_cards_num == input);
+            Your_cards_num(Index_input) = [ ];
+            Your_cards_str(Index_input) = [ ];
+            Your_cards_suit(Index_input) = [ ];
+            Your_cards(Index_input) = [ ];
+            YourCards(Index_input) = [ ];
+        else %input is different 
+            disp('go fish') %% PTB text overlay%%
+            cd =  randperm(length(Deck),1)
+            Your_cards = [Your_cards cd] %concat deck w new card
+            Your_cards_num = str2double(Deck(c1));
+            Your_cards_str(n) = num2str(Your_cards_num(n));
+            Deck(cd) = [ ];
+            if cd(1) <= 13 %record new card's suit
+                Your_cards_suit(length(Your_cards_suit)) = "clubs";
+            elseif cd(1) >= 14 && cd(1) <= 26
+                Your_cards_suit(length(Your_cards_suit)) = "hearts";
+            elseif cd(n) >= 27 && cd(n) <= 39 
+                Your_cards_suit(length(Your_cards_suit)) = "diamonds";
+            else 
+                Your_cards_suit(length(Your_cards_suit)) = "spades";
+            end
+            if Your_cards(length(Your_cards)) == "1" %change new card format if face card
+                Your_cards(length(Your_cards)) = "Ace";
+            elseif Your_cards(length(Your_cards)) == "11"
+                Your_cards(length(Your_cards)) = "J";
+            elseif Your_cards(length(Your_cards)) == "12"
+                Your_cards(length(Your_cards)) = "Q";
+            elseif Your_cards(length(Your_cards)) == "13"
+                Your_cards(length(Your_cards)) = "K";
+            end 
         YourCards = append(Your_cards,Your_cards_suit)
+        end
     end
 end 
