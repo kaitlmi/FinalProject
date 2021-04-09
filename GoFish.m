@@ -117,32 +117,33 @@ while length(YourCards) > 0 && length(CPCards) > 0
     for n = 1: length(CP_cards_num) 
         if input == CP_cards_num(n) % input is same
             YourPoints = YourPoints + 1;
-            CP_cards_num(n)  = [ ];
-            CP_cards_str(n) = [ ];
-            CP_cards_suit(n) = [ ];
-            CP_cards(n) = [ ];
-            CPCards(n) = [ ];
+            CP_cards_num(n)  = [];
+            CP_cards_str(n) = [];
+            CP_cards_suit(n) = [];
+            CP_cards(n) = [];
+            CPCards(n) = [];
             Index_input = find(Your_cards_num == input);
-            Your_cards_num(Index_input) = [ ];
-            Your_cards_str(Index_input) = [ ];
-            Your_cards_suit(Index_input) = [ ];
-            Your_cards(Index_input) = [ ];
-            YourCards(Index_input) = [ ];
+            Your_cards_num(Index_input) = [];
+            Your_cards_str(Index_input) = [];
+            Your_cards_suit(Index_input) = [];
+            Your_cards(Index_input) = [];
+            YourCards(Index_input) = [];
         else %input is different 
             disp('go fish') %% PTB text overlay%%
-            cd =  randperm(length(Deck),1)
-            Your_cards = [Your_cards cd] %concat deck w new card
-            Your_cards_num = str2double(Deck(c1));
+            cd = randperm(length(Deck),1)
+            New_card = Deck(cd);
+            Your_cards = [Your_cards New_card] %concat deck w new card
+            Your_cards_num = str2double(Your_cards);
             Your_cards_str(n) = num2str(Your_cards_num(n));
-            Deck(cd) = [ ];
+            Deck(cd) = [];
             if cd(1) <= 13 %record new card's suit
-                Your_cards_suit(length(Your_cards_suit)) = "clubs";
+                Your_cards_suit(length(Your_cards_suit)+1) = "clubs";
             elseif cd(1) >= 14 && cd(1) <= 26
-                Your_cards_suit(length(Your_cards_suit)) = "hearts";
+                Your_cards_suit(length(Your_cards_suit)+1) = "hearts";
             elseif cd(n) >= 27 && cd(n) <= 39 
-                Your_cards_suit(length(Your_cards_suit)) = "diamonds";
+                Your_cards_suit(length(Your_cards_suit)+1) = "diamonds";
             else 
-                Your_cards_suit(length(Your_cards_suit)) = "spades";
+                Your_cards_suit(length(Your_cards_suit)+1) = "spades";
             end
             if Your_cards(length(Your_cards)) == "1" %change new card format if face card
                 Your_cards(length(Your_cards)) = "Ace";
