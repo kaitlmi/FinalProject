@@ -40,6 +40,7 @@ Deck(:);
 Deck = reshape(Deck, 1, []);
 
 % deal cards
+%%%%% YOUR CARDS 
 c1 = randperm(length(Deck),5);
 disp(c1)
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
@@ -50,7 +51,6 @@ for n= 1:5
     Your_cards_str(n) = num2str(Your_cards_num(n));
 end
 Deck(c1) = []; %removes cards from the deck so there are no repeats
-
 for n = 1:5 %for creating a matrix of suits 
     if c1(n) <= 13 
         Your_cards_suit(n) = "clubs";
@@ -62,17 +62,6 @@ for n = 1:5 %for creating a matrix of suits
         Your_cards_suit(n) = "spades";
     end
 end
-
-YourCards =  strings;
-
-for n = 1:10
-    if mod(n,2) == 1 
-        YourCards(n) = Your_cards_str((n+1)/2);  
-    else
-        YourCards(n) = Your_cards_suit(n/2);
-    end
-end
-
 for n= 1:5 %Substitutes values for actual cards
     if Your_cards(n) == "1"
         Your_cards(n) = "Ace";
@@ -84,7 +73,7 @@ for n= 1:5 %Substitutes values for actual cards
         Your_cards(n) = "K";
     end 
 end 
-
+YourCards = append(Your_cards,Your_cards_suit);
 disp(YourCards)
 
 
