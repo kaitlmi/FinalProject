@@ -24,9 +24,14 @@ rr = FrameRate(window);
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 % Getting flip interval
 ifi = Screen('GetFlipInterval', window);
-table = imread('table.jpeg'); % table background
-imageTexture_table = Screen('MakeTexture', window, table);
-Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up image of table
+%table = imread('table.jpeg'); % table background
+%imageTexture_table = Screen('MakeTexture', window, table);
+%Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up image of table
+%Screen('Flip', window); % Flips to the image of table
+%WaitSecs(3)
+card = imread('red_joker.svg'); % table background
+imageTexture_card = Screen('MakeTexture', window, card);
+Screen('DrawTexture', window, imageTexture_card, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up image of table
 Screen('Flip', window); % Flips to the image of table
 WaitSecs(3)
 DrawFormattedText(window, 'Here are your cards.', 'center', 'center', white);
