@@ -176,7 +176,7 @@ while round <= 3 % While round is less than or equal to 3.
             rounds_won = rounds_won + 1; % Add one to rounds_won
             % Congratulatory message to the player 
             Screen('TextSize', window, 70);
-            DrawFormattedText(window, 'Good job! You guessed the clue!', 'center', 'center', white);
+            DrawFormattedText(window, ['Good job! You guessed the clue!', '\n Press Enter to continue'], 'center', 'center', white);
             Screen('Flip', window);
             WaitSecs(3); % Show for 3 seconds
             guess_wrong = 7; % Have guess_wrong equal to 7 to exit the while loop. 
@@ -193,6 +193,7 @@ while round <= 3 % While round is less than or equal to 3.
             Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
             Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
             % Setup the visual of Puzzle_spaces_new.
+            Screen('TextSize', window, 70);
             DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
             % Setup the instructions message. 
             DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
@@ -253,6 +254,7 @@ while round <= 3 % While round is less than or equal to 3.
             Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
             Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
             % Setup the visual of Puzzle_spaces_new.
+            Screen('TextSize', window, 70);
             DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
             % Setup the instructions message. 
             DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
@@ -279,18 +281,18 @@ while round <= 3 % While round is less than or equal to 3.
                 Screen('Flip', window);
             elseif guess_wrong == 4 % if guess_wrong is equal to 4
                 % Keep the head+body+left+right arm of the hangman
-                Screen('DrawDots', window, [0.5*screenXpixels 0.45*screenYpixels],130, white);
-                Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
-                Screen('DrawLines', window, [0.42*screenXpixels, 0.5*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
-                Screen('DrawLines', window, [0.5*screenXpixels, 0.58*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
+                Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
+                Screen('DrawLines', window, [0.52*screenXpixels, 0.6*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
+                Screen('DrawLines', window, [0.6*screenXpixels, 0.68*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
                 Screen('Flip', window);
             elseif guess_wrong == 5 % if guess_wrong is equal to 5
                 % Keep the head+body+left+right arm+left leg of the hangman
-                Screen('DrawDots', window, [0.5*screenXpixels 0.45*screenYpixels],130, white);
-                Screen('DrawLines', window, [0.5*screenXpixels, 0.5*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
-                Screen('DrawLines', window, [0.42*screenXpixels, 0.5*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
-                Screen('DrawLines', window, [0.5*screenXpixels, 0.58*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
-                Screen('DrawLines', window, [0.45*screenXpixels, 0.5*screenXpixels ; 0.9*screenYpixels, 0.8*screenYpixels], 5);
+                Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
+                Screen('DrawLines', window, [0.52*screenXpixels, 0.6*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
+                Screen('DrawLines', window, [0.6*screenXpixels, 0.68*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
+                Screen('DrawLines', window, [0.55*screenXpixels, 0.6*screenXpixels ; 0.9*screenYpixels, 0.8*screenYpixels], 5);
                 Screen('Flip', window);               
             end
             Puzzle_spaces = Puzzle_spaces_new; % Update Puzzle_spaces to include the new letters
@@ -299,7 +301,8 @@ while round <= 3 % While round is less than or equal to 3.
     end           
            
     placement = placement + 1; % Shift placement to 1 to change puzzles
-    round = round + 1; % Add one to round 
+    round = round + 1; % Add one to round '
+    clc; % Clear the command window
     
     KbStrokeWait
    
@@ -308,10 +311,10 @@ end
 Screen('TextSize', window, 70);
 DrawFormattedText(window, 'You finished all of the rounds.', 'center', 'center', white);
 Screen('Flip', window);
-WaitSecs(2);
-DrawFormattedText(window, ['You won', rounds_won,' rounds.'], 'center', 'center', white);
+WaitSecs(3);
+DrawFormattedText(window, ['You won ' num2str(rounds_won) ' rounds.'], 'center', 'center', white);
 Screen('Flip', window);
-WaitSecs(2);
+WaitSecs(3);
 if rounds_won < 2 % if rounds_won is less than 2
     % Ending message for losing against the computer
     DrawFormattedText(window, ['Unfortunately you lost against' '\n the computer'], 'center', 'center', white);
@@ -325,13 +328,13 @@ elseif rounds_won > 1
     % Ending message for winning against the computer
     DrawFormattedText(window, 'You won against the computer!', 'center', 'center', white);
     Screen('Flip', window);
-    WaitSecs(2);
+    WaitSecs(3);
     DrawFormattedText(window, 'Congratulations!', 'center', 'center', white);
     Screen('Flip', window);
-    WaitSecs(2);
+    WaitSecs(3);
     DrawFormattedText(window, ['Try a different category' '\n next time!'], 'center', 'center', white);
     Screen('Flip', window);
-    WaitSecs(3);
+    WaitSecs(5);
     sca; % Exit the program
 end
     
