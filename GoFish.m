@@ -116,26 +116,26 @@ CPCards = append(CP_cards,CP_cards_suit);
 while length(YourCards) > 0 && length(CPCards) > 0 
 %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 675, black, white);
-    if input == 'jack' || input == 'Jack'
+    if input == "jack" || input == "Jack"
         input = 11;
-    elseif input == 'queen' || input == 'Queen'
+    elseif input == "queen" || input == "Queen"
         input = 12;
-    elseif input == 'king' || input == 'King'
+    elseif input == "king" || input == "King"
         input = 13;
-    elseif input == 'ace' || input == 'Ace'
+    elseif input == "ace" || input == "Ace"
         input = 1;
-    elseif input == '2' || input == '3' || input == '4' || input == '5' || input == '6' || input == '7' || input == '8' || input == '9' || input == '10'
-        input = str2num(input)
+    elseif input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10"
+        input = str2num(input);
     else
-        input = GetEchoString(window, ' That is an invalid option. What is the name of the card that you want?', 45, 675, black, white)
+        input = GetEchoString(window, ' That is an invalid option. What is the name of the card that you want?', 45, 675, black, white);
     end
-    input_equal_CP = ismember(input, CP_cards_num) %determines whether input has equivalent value in CP?s cards, output matrix 
-    input_equal_Your = ismember(input, Your_cards_num) %determines where input has equivalent value in Your cards, output matrix 
+    input_equal_CP = ismember(input, CP_cards_num); %determines whether input has equivalent value in CP?s cards, output matrix 
+    input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix 
     YourPoints = 0;
     
     if sum(input_equal) > 0 
-		j = find(input_equal_CP, 1) %returns first index in CP deck where value DNE 0
-		k = find(input_equal_Your, 1) %returns first index in Your deck where value ~= 0
+		j = find(input_equal_CP, 1); %returns first index in CP deck where value DNE 0
+		k = find(input_equal_Your, 1); %returns first index in Your deck where value ~= 0
 		YourPoints = YourPoints + 1;
         Your_cards_num()  = [ ];
         Your_cards_str() = [ ];
@@ -149,8 +149,8 @@ while length(YourCards) > 0 && length(CPCards) > 0
         CPCards(j) = [ ];
     else
         disp('go fish') %%%%%%% TAG TAG TAG PTB text overlay%%%%%%%
-        cd =  randperm(length(Deck),1)
-        Your_cards = [Your_cards cd] %concat deck w new card
+        cd =  randperm(length(Deck),1);
+        Your_cards = [Your_cards cd]; %concat deck w new card
         Your_cards_num = str2double(Deck(cd));
         for n= 1:length(Your_cards)
    			Your_cards_str(n) = num2str(Your_cards_num(n));
@@ -174,14 +174,14 @@ while length(YourCards) > 0 && length(CPCards) > 0
     	elseif Your_cards(length(Your_cards)) == "13"
             Your_cards(length(Your_cards)) = "K";
         end 
-        YourCards = append(Your_cards,Your_cards_suit)
+        YourCards = append(Your_cards,Your_cards_suit);
     end
     
 %%% CP Turn
-    CP_equal = ismember(CP_cards_num(1), Your_cards_num) %CP asks if player has their first card, generates boolean matrix 
+    CP_equal = ismember(CP_cards_num(1), Your_cards_num); %CP asks if player has their first card, generates boolean matrix 
     CPPoints = 0;
     if sum(CP_equal) ~= 0
-        i = find(CP_equal, 1)
+        i = find(CP_equal, 1);
         CPPoints = CPPoints + 1;
         Your_cards_num(i)  = [];
         Your_cards_str(i) = [];
@@ -195,8 +195,8 @@ while length(YourCards) > 0 && length(CPCards) > 0
         CPCards(1) = [];
     else
         disp(' CP has to go fish') %% PTB text overlay%%
-        cdcp =  randperm(length(Deck),1)
-        CP_cards = [Your_cards cdcp)] %concat deck w new card
+        cdcp =  randperm(length(Deck),1);
+        CP_cards = [Your_cards cdcp]; %concat deck w new card
         CP_cards_num = str2double(Deck(cdcp));
         for n= 1:length(CP_cards)
             CP_cards_str(n) = num2str(CP_cards_num(n));
@@ -220,7 +220,7 @@ while length(YourCards) > 0 && length(CPCards) > 0
         elseif CP_cards(length(CP_cards)) == "13"
             CP_cards(length(CP_cards)) = "K";
         end  
-        CPCards = append(CP_cards,CP_cards_suit)
+        CPCards = append(CP_cards,CP_cards_suit);
     end
 end
 
