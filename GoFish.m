@@ -38,9 +38,10 @@ Deck = repmat(Deck, 1, 4);
 Deck = Deck';
 Deck(:);
 Deck = reshape(Deck, 1, []);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% deal cards %%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% deal cards %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% YOUR CARDS 
 c1 = randperm(length(Deck),5);
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
@@ -109,9 +110,9 @@ for n= 1:5 %Substitutes values for actual cards
 end 
 CPCards = append(CP_cards,CP_cards_suit);
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% ACTUAL GAME CODE %%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 while length(YourCards) > 0 && length(CPCards) > 0 
 %%% Your turn%%%%
     for n = 1: length(CP_cards_num) 
