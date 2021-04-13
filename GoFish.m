@@ -47,10 +47,6 @@ c1 = randperm(length(Deck),5);
 Your_cards = Deck(c1); %Generate matrix of 9 different cards
 Your_cards_num = str2double(Deck(c1)); %creates numerical matrix of cards
 Your_cards_suit = strings; %initializes suit matrix
-Your_cards_str = strings; %creates string of cards 
-for n= 1:5
-    Your_cards_str(n) = num2str(Your_cards_num(n));
-end
 Deck(c1) = []; %removes cards from the deck so there are no repeats
 for n = 1:5 %for creating a matrix of suits 
     if c1(n) <= 13 
@@ -136,7 +132,6 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
 		k = find(input_equal_Your, 1); %returns first index in Your deck where value ~= 0
 		YourPoints = YourPoints + 1;
         Your_cards_num(k)  = [];
-        Your_cards_str(k) = [];
         Your_cards_suit(k) = [];
         Your_cards(k) = [];
         YourCards(k) = [];
@@ -150,9 +145,6 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         cd =  randperm(length(Deck),1);
         Your_cards = [Your_cards cd]; %concat deck w new card
         Your_cards_num = str2double(Deck(cd));
-        for n= 1:length(Your_cards)
-   			Your_cards_str(n) = num2str(Your_cards_num(n));
-        end
         Deck(cd) = [];
         if cd(1) <= 13 
             Your_cards_suit(length(Your_cards_suit)) = "clubs";
@@ -182,7 +174,6 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         i = find(CP_equal, 1);
         CPPoints = CPPoints + 1;
         Your_cards_num(i)  = [];
-        Your_cards_str(i) = [];
         Your_cards_suit(i) = [];
         Your_cards(i) = [];
         YourCards(i) = [];
