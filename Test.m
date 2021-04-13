@@ -39,21 +39,21 @@ waitframes = 1;
 topPriorityLevel = MaxPriority(window);
 Priority(topPriorityLevel);
 
-Dowoon = imread('Dowoon.png');
-imageTexture_Dowoon = Screen('MakeTexture', window, Dowoon);
-[d1, d2, d3] = size(Dowoon); % Finding size of picture 
+Background = imread('Background.png');
+imageTexture_Background = Screen('MakeTexture', window, Background);
+[d1, d2, d3] = size(Background); % Finding size of picture 
 Jae = imread('Jae.png');
 imageTexture_Jae = Screen('MakeTexture', window, Jae);
 [j1, j2, j3] = size(Jae);
 theRect = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], screenXpixels/2, screenYpixels/2);
 
-Screen('DrawTexture', window, imageTexture_Dowoon, [], [] , 0);
+Screen('DrawTexture', window, imageTexture_Background, [], [0 0 screenXpixels screenYpixels] , 0);
 Screen('DrawTexture', window, imageTexture_Jae, [], theRect, 0);
 Screen('Flip', window);
 
 KbStrokeWait;
 % This is the cue which determines whether we exit the demo
-exitDemo = false;
+% exitDemo = false;
 
 % Loop the animation until the escape key is pressed
 % while exitDemo == false
