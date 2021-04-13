@@ -46,9 +46,6 @@ Jae = imread('Jae.png');
 imageTexture_Jae = Screen('MakeTexture', window, Jae);
 [j1, j2, j3] = size(Jae);
 theRect = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], screenXpixels/2, screenYpixels/2);
-Sungjin = imread('Sungjin.png');
-imageTexture_Sungjin = Screen('MakeTexture', window, Sungjin);
-[s1, s2, s3] = size(Sungjin);
 
 Screen('DrawTexture', window, imageTexture_Dowoon, [], [] , 0);
 Screen('DrawTexture', window, imageTexture_Jae, [], theRect, 0);
