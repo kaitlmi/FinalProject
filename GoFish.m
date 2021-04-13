@@ -137,18 +137,18 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         CPCards(j) = [];
     else
         DrawFormattedText(window, 'Go Fish!', 'center', 'center', white); 
-        cd =  randperm(length(Deck),1);
-        Your_cards = [Your_cards Deck(cd)]; %concat deck w new card
+        cy = randperm(length(Deck),1);
+        Your_cards = [Your_cards Deck(cy)]; %concat deck w new card
         Your_cards_num = str2double(Your_cards);
-        Deck(cd) = [];
-        if cd(1) <= 13 
-            Your_cards_suit((length(Your_cards_suit))+1) = "clubs";
-        elseif cd(1) >= 14 && cd(1) <= 26
-            Your_cards_suit((length(Your_cards_suit))+1) = "hearts";
-        elseif cd(1) >= 27 && cd(1) <= 39 
-            Your_cards_suit((length(Your_cards_suit))+1) = "diamonds";
+        Deck(cy) = [];
+        if cy(1) <= 13 
+            Your_cards_suit = [Your_cards_suit "clubs"];
+        elseif cy(1) >= 14 && cy(1) <= 26
+            Your_cards_suit = [Your_cards_suit "hearts"];
+        elseif cy(1) >= 27 && cy(1) <= 39 
+            Your_cards_suit = [Your_cards_suit "diamonds"];
         else 
-            Your_cards_suit((length(Your_cards_suit))+1) = "spades";
+            Your_cards_suit = [Your_cards_suit "spades"];
         end
         if Your_cards(length(Your_cards)) == "1"
             Your_cards(length(Your_cards)) = "Ace";
@@ -183,13 +183,13 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         CP_cards_num = str2double(CP_cards);    
         Deck(cdcp) = [];
         if cdcp(1) <= 13 
-        	CP_cards_suit((length(CP_cards_suit))+1) = "clubs";
+        	CP_cards_suit= [CP_cards_suit "clubs"];
         elseif cdcp(1) >= 14 && cdcp(1) <= 26
-        	CP_cards_suit((length(CP_cards_suit))+1) = "hearts";
+        	CP_cards_suit= [CP_cards_suit "hearts"];
     	elseif cdcp(1) >= 27 && cdcp(1) <= 39 
-        	Your_cards_suit((length(CP_cards_suit))+1) = "diamonds";
+        	CP_cards_suit= [diamonds "clubs"];
         else 
-        	Your_cards_suit((length(CP_cards_suit))+1) = "spades";
+        	CP_cards_suit= [CP_cards_suit "spades"];
         end
         if CP_cards(length(CP_cards)) == "1"
             CP_cards(length(CP_cards)) = "Ace";
