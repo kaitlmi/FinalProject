@@ -113,40 +113,38 @@ CPCards = append(CP_cards,CP_cards_suit);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-while length(YourCards) > 0 && length(CPCards) > 0 
+while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
 %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 675, black, white);
-    if input == "jack" || input == "Jack"
+    if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1
         input = 11;
-    elseif input == "queen" || input == "Queen"
+    elseif strcmp(input, 'queen') == 1 || strcmp(input, 'Queen') == 1
         input = 12;
-    elseif input == "king" || input == "King"
+    elseif strcmp(input, 'king') == 1 || strcmp(input, 'King') == 1
         input = 13;
-    elseif input == "ace" || input == "Ace"
+    elseif strcmp(input, 'ace') == 1 || strcmp(input, 'Ace') == 1
         input = 1;
-    elseif input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10"
-        input = str2num(input);
     else
-        input = GetEchoString(window, ' That is an invalid option. What is the name of the card that you want?', 45, 675, black, white);
+        input = str2num(input);
     end
     input_equal_CP = ismember(input, CP_cards_num); %determines whether input has equivalent value in CP?s cards, output matrix 
     input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix 
     YourPoints = 0;
     
-    if sum(input_equal) > 0 
+    if sum(input_equal_CP) > 0 
 		j = find(input_equal_CP, 1); %returns first index in CP deck where value DNE 0
 		k = find(input_equal_Your, 1); %returns first index in Your deck where value ~= 0
 		YourPoints = YourPoints + 1;
-        Your_cards_num()  = [ ];
-        Your_cards_str() = [ ];
-        Your_cards_suit() = [ ];
-        Your_cards() = [ ];
-        YourCards() = [ ];
-        CP_cards_num(j) = [ ];
-        CP_cards_str(j) = [ ];
-        CP_cards_suit(j) = [ ];
-        CP_cards(j) = [ ];
-        CPCards(j) = [ ];
+        Your_cards_num(k)  = [];
+        Your_cards_str(k) = [];
+        Your_cards_suit(k) = [];
+        Your_cards(k) = [];
+        YourCards(k) = [];
+        CP_cards_num(j) = [];
+        CP_cards_str(j) = [];
+        CP_cards_suit(j) = [];
+        CP_cards(j) = [];
+        CPCards(j) = [];
     else
         disp('go fish') %%%%%%% TAG TAG TAG PTB text overlay%%%%%%%
         cd =  randperm(length(Deck),1);
@@ -223,4 +221,5 @@ while length(YourCards) > 0 && length(CPCards) > 0
         CPCards = append(CP_cards,CP_cards_suit);
     end
 end
+
 
