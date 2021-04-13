@@ -16,6 +16,15 @@ black = BlackIndex(screenNumber);
 % Setup the text size
 Screen('TextSize', window, 70);
 
+% Setting up the sounds used in the experiment
+[wavedata1, freq1] = audioread('Right Buzzer.m4a'); % Right Buzzer sound
+[wavedata2, freq2] = audioread('Wrong buzzer.m4a'); % Wrong Buzzer sound
+InitializePsychSound(1); % Initializing the PsychToolBox Sound. 
+pahandle1 = PsychPortAudio('Open', [], 1, 1, freq1, 2); % pahandle for elevator sound
+pahandle2 = PsychPortAudio('Open', [], 1, 1, freq2, 2); % pahandle for distracting sound
+PsychPortAudio('FillBuffer', pahandle1, [wavedata1, wavedata1]'); 
+PsychPortAudio('FillBuffer', pahandle2, [wavedata2, wavedata2]');
+
 % Setting up the 1, 2, and 3 key on the keyboard for KbCheck.
 KbName('UnifyKeyNames')
 oneKey = KbName('1!');
@@ -173,6 +182,9 @@ while round <= 3 % While round is less than or equal to 3.
         end
                 
         if Puzzle_spaces_new == Puzzle_letters % if Puzzle_spaces_new is equal to the original puzzle.
+            % Play right buzzer sound 
+            PsychPortAudio('Start', pahandle1);
+            PsychPortAudio('Stop', pahandle1, 1,1,4)
             rounds_won = rounds_won + 1; % Add one to rounds_won
             % Congratulatory message to the player 
             Screen('TextSize', window, 70);
@@ -187,7 +199,10 @@ while round <= 3 % While round is less than or equal to 3.
             Screen('TextSize', window, 70);
             DrawFormattedText(window, 'Wrong letter', 'center', 'center', white);
             Screen('Flip', window);
-            WaitSecs(2); % Wait for 2 seconds
+            % Play wrong buzzer sound
+            PsychPortAudio('Start', pahandle2);
+            PsychPortAudio('Stop', pahandle2, 1,1)
+            WaitSecs(1); % Wait for 1 seconds
             % Setup the hangman noose 
             Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
             Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
@@ -261,6 +276,9 @@ while round <= 3 % While round is less than or equal to 3.
             % Setup the Guessed letters corner. 
             Screen('TextSize', window, 60);
             DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);
+            % Play right buzzer sound
+            PsychPortAudio('Start', pahandle1);
+            PsychPortAudio('Stop', pahandle1, 1,1)
 
             if guess_wrong == 0 % if guess_wrong is equal to zero        
                 Screen('Flip', window); % 
