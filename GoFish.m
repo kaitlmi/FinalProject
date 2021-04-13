@@ -142,13 +142,13 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         Your_cards_num = str2double(Your_cards);
         Deck(cd) = [];
         if cd(1) <= 13 
-            Your_cards_suit((length(Your_cards_suit)+1)) = "clubs";
+            Your_cards_suit((length(Your_cards_suit))+1) = "clubs";
         elseif cd(1) >= 14 && cd(1) <= 26
-            Your_cards_suit((length(Your_cards_suit)+1)) = "hearts";
+            Your_cards_suit((length(Your_cards_suit))+1) = "hearts";
         elseif cd(1) >= 27 && cd(1) <= 39 
-            Your_cards_suit((length(Your_cards_suit)+1)) = "diamonds";
+            Your_cards_suit((length(Your_cards_suit))+1) = "diamonds";
         else 
-            Your_cards_suit((length(Your_cards_suit)+1)) = "spades";
+            Your_cards_suit((length(Your_cards_suit))+1) = "spades";
         end
         if Your_cards(length(Your_cards)) == "1"
             Your_cards(length(Your_cards)) = "Ace";
@@ -183,13 +183,13 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         CP_cards_num = str2double(CP_cards);    
         Deck(cdcp) = [];
         if cdcp(1) <= 13 
-        	CP_cards_suit((length(CP_cards_suit)+1)) = "clubs";
+        	CP_cards_suit((length(CP_cards_suit))+1) = "clubs";
         elseif cdcp(1) >= 14 && cdcp(1) <= 26
-        	CP_cards_suit((length(CP_cards_suit)+1)) = "hearts";
+        	CP_cards_suit((length(CP_cards_suit))+1) = "hearts";
     	elseif cdcp(1) >= 27 && cdcp(1) <= 39 
-        	Your_cards_suit((length(CP_cards_suit)+1)) = "diamonds";
+        	Your_cards_suit((length(CP_cards_suit))+1) = "diamonds";
         else 
-        	Your_cards_suit((length(CP_cards_suit)+1)) = "spades";
+        	Your_cards_suit((length(CP_cards_suit))+1) = "spades";
         end
         if CP_cards(length(CP_cards)) == "1"
             CP_cards(length(CP_cards)) = "Ace";
