@@ -77,10 +77,6 @@ c2 = randperm(length(Deck),5);
 CP_cards = Deck(c2); %Generate matrix of 5 different cards
 CP_cards_num = str2double(Deck(c2)); %creates numerical matrix of cards
 CP_cards_suit = strings; %initializes suit matrix
-CP_cards_str = strings; %creates string of cards 
-for n= 1:5
-    CP_cards_str(n) = num2str(CP_cards_num(n));
-end
 Deck(c2) = []; %removes cards from the deck so there are no repeats
 for n = 1:5 %for creating a matrix of suits 
     if c2(n) <= 13 
@@ -111,7 +107,7 @@ CPCards = append(CP_cards,CP_cards_suit);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
 %%% Your turn%%%%
-    input = GetEchoString(window, 'What is the name of the card that you want?', 45, 675, black, white);
+    input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
     if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1
         input = 11;
     elseif strcmp(input, 'queen') == 1 || strcmp(input, 'Queen') == 1
@@ -127,7 +123,8 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix 
     YourPoints = 0;
     
-    if sum(input_equal_CP) > 0 
+    if sum(input_equal_CP) > 0 %your card matches one of CP's cards
+        DrawFormattedText(window, 'You found a match!', 'center', 'center', white);
 		j = find(input_equal_CP, 1); %returns first index in CP deck where value DNE 0
 		k = find(input_equal_Your, 1); %returns first index in Your deck where value ~= 0
 		YourPoints = YourPoints + 1;
@@ -136,24 +133,23 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         Your_cards(k) = [];
         YourCards(k) = [];
         CP_cards_num(j) = [];
-        CP_cards_str(j) = [];
         CP_cards_suit(j) = [];
         CP_cards(j) = [];
         CPCards(j) = [];
     else
-        disp('go fish') %%%%%%% TAG TAG TAG PTB text overlay%%%%%%%
+        DrawFormattedText(window, 'Go Fish!', 'center', 'center', white); 
         cd =  randperm(length(Deck),1);
-        Your_cards = [Your_cards cd]; %concat deck w new card
-        Your_cards_num = str2double(Deck(cd));
+        Your_cards = [Your_cards Deck(cd)]; %concat deck w new card
+        Your_cards_num = str2double(Your_cards);
         Deck(cd) = [];
         if cd(1) <= 13 
-            Your_cards_suit(length(Your_cards_suit)) = "clubs";
+            Your_cards_suit((length(Your_cards_suit)+1)) = "clubs";
         elseif cd(1) >= 14 && cd(1) <= 26
-            Your_cards_suit(length(Your_cards_suit)) = "hearts";
+            Your_cards_suit((length(Your_cards_suit)+1)) = "hearts";
         elseif cd(1) >= 27 && cd(1) <= 39 
-            Your_cards_suit(length(Your_cards_suit)) = "diamonds";
+            Your_cards_suit((length(Your_cards_suit)+1)) = "diamonds";
         else 
-            Your_cards_suit(length(Your_cards_suit)) = "spades";
+            Your_cards_suit((length(Your_cards_suit)+1)) = "spades";
         end
         if Your_cards(length(Your_cards)) == "1"
             Your_cards(length(Your_cards)) = "Ace";
@@ -178,27 +174,23 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         Your_cards(i) = [];
         YourCards(i) = [];
         CP_cards_num(1) = [];
-        CP_cards_str(1) = [];
         CP_cards_suit(1) = [];
         CP_cards(1) = [];
         CPCards(1) = [];
     else
         disp(' CP has to go fish') %% PTB text overlay%%
         cdcp =  randperm(length(Deck),1);
-        CP_cards = [Your_cards cdcp]; %concat deck w new card
-        CP_cards_num = str2double(Deck(cdcp));
-        for n= 1:length(CP_cards)
-            CP_cards_str(n) = num2str(CP_cards_num(n));
-        end
-        Deck(cdcp) = [ ];
+        CP_cards = [CP_cards Deck(cdcp)]; %concat deck w new card
+        CP_cards_num = str2double(CP_cards);    
+        Deck(cdcp) = [];
         if cdcp(1) <= 13 
-        	CP_cards_suit(length(CP_cards_suit)) = "clubs";
+        	CP_cards_suit((length(CP_cards_suit)+1)) = "clubs";
         elseif cdcp(1) >= 14 && cdcp(1) <= 26
-        	CP_cards_suit(length(CP_cards_suit)) = "hearts";
+        	CP_cards_suit((length(CP_cards_suit)+1)) = "hearts";
     	elseif cdcp(1) >= 27 && cdcp(1) <= 39 
-        	Your_cards_suit(length(Your_cards_suit)) = "diamonds";
+        	Your_cards_suit((length(CP_cards_suit)+1)) = "diamonds";
         else 
-        	Your_cards_suit(length(Your_cards_suit)) = "spades";
+        	Your_cards_suit((length(CP_cards_suit)+1)) = "spades";
         end
         if CP_cards(length(CP_cards)) == "1"
             CP_cards(length(CP_cards)) = "Ace";
