@@ -345,10 +345,25 @@ for n = 1:length(Your_cards)
     end
 end
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% CP CARDS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Back = imread('backofcard.png');
+[k1, k2, k3] = size(Back);
+for n = 1:length(CP_cards)
+    r = 300 + (n*100);
+    RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 900);
+for n = 1:length(CP_cards)
+        Back = imread('backofcard.png');
+        imageTexture_Back = Screen('MakeTexture', window, Back);
+        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+end
+end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
 %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
