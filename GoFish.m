@@ -384,7 +384,7 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     else
         DrawFormattedText(window, 'Go Fish!', 'center', 'center', black); 
         WaitSecs(1.5)
-        Screen('Flip', window); %%%%%%%%%%%%
+        %Screen('Flip', window); %%%%%%%%%%%%
         cy = randperm(length(Deck),1);
         Your_cards = [Your_cards Deck(cy)]; %concat deck w new card
         Your_cards_num = str2double(Your_cards);
