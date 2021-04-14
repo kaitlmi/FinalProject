@@ -121,7 +121,8 @@ AceC = imread('ace_of_clubs.png');
 for n = 1:length(Your_cards)
 	r = 300 + (n*100);
     Rect = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 300);
-for n = 1:length(Your_cards)
+%for m = 1:length(Your_cards)
+    %YourCards(n)
     if strcmp(YourCards(n), 'Aceclubs') == 1
 		AceC = imread('ace_of_clubs.png');
 		imageTexture_AceC = Screen('MakeTexture', window, AceC);
@@ -344,7 +345,8 @@ for n = 1:length(Your_cards)
         Screen('DrawTexture', window, imageTexture_KD, [], Rect, 0);
     end
 end
-end
+%end
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% CP CARDS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -367,13 +369,13 @@ end
 while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
 %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
-    if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1
+    if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1 || strcmp(input, 'J') == 1 || strcmp(input, 'j') == 1
         input = 11;
-    elseif strcmp(input, 'queen') == 1 || strcmp(input, 'Queen') == 1
+    elseif strcmp(input, 'queen') == 1 || strcmp(input, 'Queen') == 1 || strcmp(input, 'Q') == 1 || strcmp(input, 'q') == 1
         input = 12;
-    elseif strcmp(input, 'king') == 1 || strcmp(input, 'King') == 1
+    elseif strcmp(input, 'king') == 1 || strcmp(input, 'King') == 1 || strcmp(input, 'K') == 1 || strcmp(input, 'k') == 1
         input = 13;
-    elseif strcmp(input, 'ace') == 1 || strcmp(input, 'Ace') == 1
+    elseif strcmp(input, 'ace') == 1 || strcmp(input, 'Ace') == 1 || strcmp(input, 'A') == 1 || strcmp(input, 'a') == 1
         input = 1;
     else
         input = str2num(input);
@@ -382,9 +384,12 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix 
     YourPoints = 0;
     
-    if sum(input_equal_CP) > 0 %your card matches one of CP's cards
+    if sum(input_equal_CP) > 0 %your card matches one of CP's cards     
+        Screen('Flip', window)
+        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
         DrawFormattedText(window, 'You found a match!', 'center', 'center', black);
-        WaitSecs(1.5)
+        Screen('Flip', window)
+        WaitSecs(1.5)    
 		j = find(input_equal_CP, 1); %returns first index in CP deck where value DNE 0
 		k = find(input_equal_Your, 1); %returns first index in Your deck where value ~= 0
 		YourPoints = YourPoints + 1;
@@ -397,8 +402,11 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         CP_cards(j) = [];
         CPCards(j) = [];
     else
-        DrawFormattedText(window, 'Go Fish!', 'center', 'center', black); 
-        WaitSecs(1.5)
+        %Screen('Flip', window)
+        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+        DrawFormattedText(window, 'Go Fish!', 'center', 'center', black);
+        Screen('Flip', window)
+        WaitSecs(1.5) 
         %Screen('Flip', window); %%%%%%%%%%%%
         cy = randperm(length(Deck),1);
         Your_cards = [Your_cards Deck(cy)]; %concat deck w new card
@@ -429,6 +437,10 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     CP_equal = ismember(CP_cards_num(1), Your_cards_num); %CP asks if player has their first card, generates boolean matrix 
     CPPoints = 0;
     if sum(CP_equal) ~= 0
+        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+        DrawFormattedText(window, 'CP has found a match! Your turn.', 'center', 'center', black);
+        Screen('Flip', window)
+        WaitSecs(1.5)
         i = find(CP_equal, 1);
         CPPoints = CPPoints + 1;
         Your_cards_num(i)  = [];
@@ -440,7 +452,10 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         CP_cards(1) = [];
         CPCards(1) = [];
     else
-        disp(' CP has to go fish') %% PTB text overlay%%
+        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+        DrawFormattedText(window, 'CP has gone fishing. Your turn!', 'center', 'center', black);
+        Screen('Flip', window)
+        WaitSecs(1.5)
         cdcp =  randperm(length(Deck),1);
         CP_cards = [CP_cards Deck(cdcp)]; %concat deck w new card
         CP_cards_num = str2double(CP_cards);    
@@ -473,7 +488,7 @@ AceC = imread('ace_of_clubs.png');
 for n = 1:length(Your_cards)
 	r = 300 + (n*100);
     Rect = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 300);
-for n = 1:length(Your_cards)
+%for m = 1:length(Your_cards)
     if strcmp(YourCards(n), 'Aceclubs') == 1
 		AceC = imread('ace_of_clubs.png');
 		imageTexture_AceC = Screen('MakeTexture', window, AceC);
@@ -697,6 +712,6 @@ for n = 1:length(Your_cards)
     end
 end
 end 
-end
+
 
 
