@@ -134,6 +134,7 @@ imageTexture_table = Screen('MakeTexture', window, table);
 Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up image of table
 DrawFormattedText(window, 'Here are your cards.', 'center', 'center', white);
 Screen('Flip', window); % Added?
+WaitSecs(3);
 
 
 % create card 'stack' that is row vector of card values 
