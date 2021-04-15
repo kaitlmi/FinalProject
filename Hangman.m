@@ -52,7 +52,7 @@ Screen('Flip', window);
 move_forward = false; % whether the program can move forward from setting up the puzzles. 
 while move_forward == false % while move_forward is false
     % Check whether 1, 2, or 3 is pressed on the keyboard. 
-    [keyIsDown, secs, keyCode] = KbCheck;    
+    [secs, keyCode, deltaSecs] = KbWait;    
     if keyCode(oneKey) % If the 1 key is pressed
         % Setting up the Puzzles for category: US Vacation spots
         Puzzle_1 = 'new york city';  
@@ -91,9 +91,14 @@ while move_forward == false % while move_forward is false
         Puzzle_6 = 'mr brightside';                       
         Puzzle_7 = 'check yes juliet';  
         Puzzle_8 = 'misery business';               
-        Puzzle_9 = 'im not okay';          
-        
+        Puzzle_9 = 'im not okay';                  
         move_forward = true;
+    elseif ~keyCode(oneKey) && ~keyCode(twoKey) && ~keyCode(threeKey)
+        DrawFormattedText(window, 'Wrong Key. Press 1, 2, or 3', 'center', 'center', white);
+        Screen('Flip', window);
+        WaitSecs(2);
+        DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', '\n 3. Punk Pop/Rock Anthems 2000s'], 'center', 'center', white);
+        Screen('Flip', window);     
     end
 end
 
