@@ -8,7 +8,7 @@ screens = Screen('Screens');
 screenNumber = max(screens);
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
-[window, windowRect] = PsychImaging('OpenWindow',screenNumber, black);
+[window, windowRect] = PsychImaging('OpenWindow', screenNumber, black);
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 
 ifi = Screen('GetFlipInterval', window);

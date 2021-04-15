@@ -1,3 +1,8 @@
+%%%%% To the TA's: Hi, I'm Kaitlyn, and I coded and debugged this in its
+%%%%% entirety. I was pretty bad at reporting the hours, unfortunately, so
+%%%%% I didn't end up doing that. 
+
+
 % Clears command window, workspace, and variables
 sca;
 close all;
@@ -712,10 +717,10 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% CP CARDS %%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    for p = 1:length(CP_cards)
-    r = 300 + (n*100);
-    RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 900);
-    Back = imread('backofcard.png');
-    imageTexture_Back = Screen('MakeTexture', window, Back);
-    Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
-    end
+for p = 1:length(CP_cards)
+r = 300 + (n*100);
+RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 900);
+Back = imread('backofcard.png');
+imageTexture_Back = Screen('MakeTexture', window, Back);
+Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+end
