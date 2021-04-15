@@ -19,8 +19,6 @@ grey = white / 2;
 [~, ~] = Screen('WindowSize', window);
 ifi = Screen('GetFlipInterval', window);
 rr = FrameRate(window);
-% Opening a black window
-%[window, windowRect] = PsychImaging('OpenWindow', screenNumber, black);
 % Getting the size of the on screen window
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
 % Getting flip interval
@@ -121,8 +119,6 @@ AceC = imread('ace_of_clubs.png');
 for n = 1:length(Your_cards)
 	r = 300 + (n*100);
     Rect = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 300);
-%for m = 1:length(Your_cards)
-    %YourCards(n)
     if strcmp(YourCards(n), 'Aceclubs') == 1
 		AceC = imread('ace_of_clubs.png');
 		imageTexture_AceC = Screen('MakeTexture', window, AceC);
@@ -345,7 +341,6 @@ for n = 1:length(Your_cards)
         Screen('DrawTexture', window, imageTexture_KD, [], Rect, 0);
     end
 end
-%end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% CP CARDS %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -355,18 +350,18 @@ Back = imread('backofcard.png');
 for n = 1:length(CP_cards)
     r = 300 + (n*100);
     RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 900);
-for n = 1:length(CP_cards)
-        Back = imread('backofcard.png');
-        imageTexture_Back = Screen('MakeTexture', window, Back);
-        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+    Back = imread('backofcard.png');
+    imageTexture_Back = Screen('MakeTexture', window, Back);
+    Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
 end
-end
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
+    Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
 %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
     if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1 || strcmp(input, 'J') == 1 || strcmp(input, 'j') == 1
@@ -712,6 +707,13 @@ for n = 1:length(Your_cards)
     end
 end
 end 
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% CP CARDS %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    for p = 1:length(CP_cards)
+    r = 300 + (n*100);
+    RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], r, 900);
+    Back = imread('backofcard.png');
+    imageTexture_Back = Screen('MakeTexture', window, Back);
+    Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+    end
