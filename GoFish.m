@@ -1,5 +1,6 @@
 %%%%% To the TA's: Hi, I'm Kaitlyn, and I coded and debugged this in its
-%%%%% entirety. I was pretty bad at reporting the hours, unfortunately, so
+%%%%% entirety (with help from Lakshmi, an absolute legend) 
+%%%%% I was pretty bad at reporting the hours, unfortunately, so
 %%%%% I didn't end up doing that.
 
 
