@@ -31,6 +31,8 @@ KbName('UnifyKeyNames')
 oneKey = KbName('1!');
 twoKey = KbName('2@');
 threeKey = KbName('3#');
+fourKey = KbName('4$');
+fiveKey = KbName('5%');
 
 % Getting the size of the screen
 [screenXpixels, screenYpixels] = Screen('WindowSize', window);
@@ -52,7 +54,8 @@ while game == true
 
 
     % Setting up the words to select a category to play from. 
-    DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', '\n 3. Punk Pop/Rock Anthems 2000s'], 'center', 'center', white);
+    DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', ... 
+        '\n 3. Punk Pop/Rock Anthems 2000s', '\n 4. Difficult Hangman words', '\n 5. Famous Book Series'], 'center', 'center', white);
     Screen('Flip', window);
 
 
@@ -70,7 +73,8 @@ while game == true
             Puzzle_6 = 'grand canyon';                       
             Puzzle_7 = 'new orleans';  
             Puzzle_8 = 'chicago';               
-            Puzzle_9 = 'yellowstone';          
+            Puzzle_9 = 'yellowstone';   
+            Puzzle_10 = 'washington dc';
 
             move_forward = true; % Done setting up the puzzles. 
 
@@ -84,7 +88,8 @@ while game == true
             Puzzle_6 = 'enchilada';                       
             Puzzle_7 = 'tandoori chicken';  
             Puzzle_8 = 'lomi salmon';               
-            Puzzle_9 = 'kachumbari';          
+            Puzzle_9 = 'kachumbari';  
+            Puzzle_10 = 'philly cheesesteak';
 
             move_forward = true; % Done setting up the puzzles. 
 
@@ -98,7 +103,40 @@ while game == true
             Puzzle_6 = 'mr brightside';                       
             Puzzle_7 = 'check yes juliet';  
             Puzzle_8 = 'misery business';               
-            Puzzle_9 = 'im not okay';                  
+            Puzzle_9 = 'im not okay';    
+            Puzzle_10 = 'i write sins not tragedies';
+            
+            move_forward = true;
+        
+        elseif keyCode(fourKey) % If the 4 key is pressed
+            % Setting up the Puzzles for category: Difficult Hangman Words
+            
+            Puzzle_1 = 'quixotic';
+            Puzzle_2 = 'gazebo';
+            Puzzle_3 = 'espionage';
+            Puzzle_4 = 'whizzing';
+            Puzzle_5 = 'jukebox';
+            Puzzle_6 = 'quorum';
+            Puzzle_7 = 'jazzy';
+            Puzzle_8 = 'wristwatch';
+            Puzzle_9 = 'awkward';
+            Puzzle_10 = 'syndrome';
+            
+            move_forward = true;
+            
+        elseif keyCode(fiveKey) % If the 5 key is pressed
+            % Setting up the Puzzles for category: Famous Twitch Streamers
+            Puzzle_1 = 'harry potter';
+            Puzzle_2 = 'the hunger games';
+            Puzzle_3 = 'mortal instruments';
+            Puzzle_4 = 'lord of the rings';
+            Puzzle_5 = 'twilight';
+            Puzzle_6 = 'percy jackson';
+            Puzzle_7 = 'divergent';
+            Puzzle_8 = 'magic tree house';
+            Puzzle_9 = 'chronicles of narnia';
+            Puzzle_10 = 'robert langdon';
+            
             move_forward = true;
         elseif ~keyCode(oneKey) && ~keyCode(twoKey) && ~keyCode(threeKey)
             DrawFormattedText(window, 'Wrong Key. Press 1, 2, or 3', 'center', 'center', white);
@@ -112,7 +150,7 @@ while game == true
     % Clear the command window
     clc;
     % Generate a vector of 3 random numbers from 1-9 
-    Puzzle_Number = randperm(9,3);
+    Puzzle_Number = randperm(10,3);
 
     round = 1; % the number of the round
 
@@ -140,6 +178,8 @@ while game == true
             Puzzle = Puzzle_8; % Set variable Puzzle to be equal to Puzzle_8
         elseif Puzzle_Number(placement) == 9
             Puzzle = Puzzle_9; % Set variable Puzzle to be equal to Puzzle_9
+        elseif Puzzle_Number(placement) == 10
+            Puzzle = Puzzle_10;
         end
 
         %Create variable Puzzle_spaces which is converted into the cell format. 
@@ -349,7 +389,7 @@ while game == true
         Screen('Flip', window);
         WaitSecs(3);
         % Getting input whether to play again or not
-        input = GetEchoString(window, 'Would you like to play again? Y/N', 100 , 450, white);
+        input = GetEchoString(window, 'Would you like to play again? y/n', 100 , 450, white);
         % If yes
         if input == 'Y' || input == 'y'
             Screen('Flip', window);
@@ -368,17 +408,17 @@ while game == true
         DrawFormattedText(window, 'Congratulations!', 'center', 'center', white);
         Screen('Flip', window);
         WaitSecs(3);
-        input = GetEchoString(window, 'Would you like to play again? Y/N', 100, 450, white, black);
+        input = GetEchoString(window, 'Would you like to play again? y/n', 100, 450, white, black);
         if input == 'Y' || input == 'y'
             Screen('Flip', window);
             WaitSecs(2);
             continue
         elseif input == 'N' || input == 'n'
             game = false;
-        end    
-        
+        end          
     end
 end
+
 Screen('Flip', window);
 DrawFormattedText(window, 'Thanks for playing!', 'center', 'center', white);
 Screen('Flip', window);
