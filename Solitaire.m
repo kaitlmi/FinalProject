@@ -34,8 +34,8 @@ WaitSecs(1)
 %create the deck from the 4 suits (to keep track of card color and suit) 
 hearts = 1:13; % Color: RED
 spades = 1:13; % BLACK
-clubs = 1:13; %BLACK
-diamonds = 1:13; %RED
+clubs = 1:13; % BLACK
+diamonds = 1:13; % RED
 full_deck = [hearts,spades,clubs,diamonds];
 
 
