@@ -4,7 +4,7 @@ clc;
 close all;
 clearvars;
 PsychDefaultSetup(2);
-Screen('Preference', 'SkipSyncTests', 0);
+Screen('Preference', 'SkipSyncTests', 1);
 
 % Setting up the screens 
 screens = Screen('Screens');
@@ -16,6 +16,8 @@ black = BlackIndex(screenNumber);
 
 % Setup the text size
 Screen('TextSize', window, 70);
+% Setup the text font
+Screen('TextFont', window,'chalkboard');
 
 % Setting up the sounds used in the experiment
 [wavedata1, freq1] = audioread('Right Buzzer.m4a'); % Right Buzzer sound
@@ -25,6 +27,10 @@ pahandle1 = PsychPortAudio('Open', [], 1, 1, freq1, 2); % pahandle for elevator 
 pahandle2 = PsychPortAudio('Open', [], 1, 1, freq2, 2); % pahandle for distracting sound
 PsychPortAudio('FillBuffer', pahandle1, [wavedata1, wavedata1]'); 
 PsychPortAudio('FillBuffer', pahandle2, [wavedata2, wavedata2]');
+
+% Setting up the blackboard background
+blackboard = imread('Blackboard.png'); % blackboard background
+Blackboard = Screen('MakeTexture', window, blackboard);
 
 % Setting up the 1, 2, and 3 key on the keyboard for KbCheck.
 KbName('UnifyKeyNames')
@@ -51,7 +57,6 @@ while game == true
     DrawFormattedText(window, 'Try to beat it!','center', 'center', white);
     Screen('Flip', window);
     WaitSecs(3)
-
 
     % Setting up the words to select a category to play from. 
     DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', ... 
@@ -149,7 +154,7 @@ while game == true
 
     % Clear the command window
     clc;
-    % Generate a vector of 3 random numbers from 1-9 
+    % Generate a vector of 3 random numbers from 1-10
     Puzzle_Number = randperm(10,3);
 
     round = 1; % the number of the round
@@ -205,6 +210,7 @@ while game == true
         % Creates a string with words: 'Guessed:'
         string = 'Guessed:';
         % Setting up the visual of the noose    
+        Screen('DrawTexture', window, Blackboard, [], [0 0 screenXpixels screenYpixels], 0);
         Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
         Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
         Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
@@ -256,6 +262,7 @@ while game == true
                 PsychPortAudio('Stop', pahandle2, 1,1)
                 WaitSecs(1); % Wait for 1 seconds
                 % Setup the hangman noose 
+                Screen('DrawTexture', window, Blackboard, [], [0 0 screenXpixels screenYpixels], 0);
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
                 Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
@@ -317,7 +324,8 @@ while game == true
                     guess_wrong = guess_wrong + 1; % Add one to guess_wrong to exit the while loop. 
                 end                   
             else % if the correct letter is guessed  
-                % Setup the hangman noose 
+                % Setup the hangman noose
+                Screen('DrawTexture', window, Blackboard, [], [0 0 screenXpixels screenYpixels], 0);
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
                 Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
