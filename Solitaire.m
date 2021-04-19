@@ -31,7 +31,7 @@ WaitSecs(2)
 DrawFormattedText(window, 'Ready to Play?', 'center', 'center', white);
 WaitSecs(1)
 
-%create the deck from the 4 suits (to keep track of card color and suit) 
+%create the deck as a row vector from the 4 suits (to keep track of card color and suit) 
 hearts = 1:13; % Color: RED
 spades = 1:13; % BLACK
 clubs = 1:13; % BLACK
