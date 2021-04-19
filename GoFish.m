@@ -139,7 +139,7 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
     RenderCardsFaceUp(Your_cards, YourCards, window);
     RenderCardsFaceDown(CP_cards, window)
-    
+
     %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
     if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1 || strcmp(input, 'J') == 1 || strcmp(input, 'j') == 1
@@ -153,8 +153,8 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     else
         input = str2num(input);
     end
-    input_equal_CP = ismember(input, CP_cards_num); %determines whether input has equivalent value in CP?s cards, output matrix
-    input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix
+    input_equal_CP = ismember(CP_cards_num, input); %determines whether input has equivalent value in CP?s cards, output matrix
+    input_equal_Your = ismember(Your_cards_num, input); %determines where input has equivalent value in Your cards, output matrix
     YourPoints = 0;
     if sum(input_equal_CP) > 0 %your card matches one of CP's cards
         Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
@@ -185,7 +185,6 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         cy = randperm(length(Deck),1);
         Your_cards = [Your_cards Deck(cy)]; %concat deck w new card
         Your_cards_num = str2double(Your_cards);
-        Deck(cy) = [];
         if cy(1) <= 13
             Your_cards_suit = [Your_cards_suit "clubs"];
         elseif cy(1) >= 14 && cy(1) <= 26
@@ -204,7 +203,25 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         elseif Your_cards(length(Your_cards)) == "13"
             Your_cards(length(Your_cards)) = "K";
         end
-        YourCards = append(Your_cards,Your_cards_suit);
+        for r = 1:length(Your_cards) %tag
+            if Deck(cy) == Your_cards(r)
+                Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
+                RenderCardsFaceUp(Your_cards, YourCards, window);
+                RenderCardsFaceDown(CP_cards, window)
+                DrawFormattedText(window, 'You drew a match!', 'center', 'center', black);
+                Screen('Flip', window)
+                WaitSecs(1.5)
+                Your_cards(r) = [];
+                Your_cards(length(Your_cards)) = [];
+                Your_cards_num(r) = [];
+                Your_cards_num(length(Your_cards_num)) = [];
+                Your_cards_suit(r) = [];
+                Your_cards_suit(length(Your_cards_suit)) = [];
+                YourPoints = YourPoints +1
+            end
+        end
+        Deck(cy) = [];
+        YourCards = append(Your_cards,Your_cards_suit);        
     end
     
     %%% CP Turn
