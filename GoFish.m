@@ -1,5 +1,6 @@
 %%%%% To the TA's: Hi, I'm Kaitlyn, and I coded and debugged this in its
-%%%%% entirety. I was pretty bad at reporting the hours, unfortunately, so
+%%%%% entirety (with help from Lakshmi, an absolute legend)
+%%%%% I was pretty bad at reporting the hours, unfortunately, so
 %%%%% I didn't end up doing that.
 
 
@@ -125,20 +126,19 @@ Back = imread('backofcard.png');
 [k1, k2, k3] = size(Back);
 %RectB = CenterRectOnPointd([0, 0, 0.5*k1, 0.5*k2], r, 900);
 
-
+YourPoints = 0;
+CPPoints = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
-
+while YourPoints < 5 || CPPoints < 5 %~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck) ||   
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%% DISPLAYS CARDS IN ORIGINAL DECK %%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
     RenderCardsFaceUp(Your_cards, YourCards, window);
     RenderCardsFaceDown(CP_cards, window)
-    
     %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
     if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1 || strcmp(input, 'J') == 1 || strcmp(input, 'j') == 1
@@ -152,9 +152,8 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     else
         input = str2num(input);
     end
-    input_equal_CP = ismember(input, CP_cards_num); %determines whether input has equivalent value in CP?s cards, output matrix
-    input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix
-    YourPoints = 0;
+    input_equal_CP = ismember(CP_cards_num, input); %determines whether input has equivalent value in CP?s cards, output matrix
+    input_equal_Your = ismember(Your_cards_num, input); %determines where input has equivalent value in Your cards, output matrix
     if sum(input_equal_CP) > 0 %your card matches one of CP's cards
         Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
         RenderCardsFaceUp(Your_cards, YourCards, window);
@@ -173,8 +172,11 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         CP_cards_suit(j) = [];
         CP_cards(j) = [];
         CPCards(j) = [];
+        Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
+        RenderCardsFaceUp(Your_cards, YourCards, window);
+        RenderCardsFaceDown(CP_cards, window)
+        Screen('Flip', window)
     else
-        %Screen('Flip', window)
         Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
         RenderCardsFaceUp(Your_cards, YourCards, window);
         RenderCardsFaceDown(CP_cards, window)
@@ -182,33 +184,61 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         Screen('Flip', window)
         WaitSecs(1.5)
         cy = randperm(length(Deck),1);
-        Your_cards = [Your_cards Deck(cy)]; %concat deck w new card
-        Your_cards_num = str2double(Your_cards);
-        Deck(cy) = [];
-        if cy(1) <= 13
-            Your_cards_suit = [Your_cards_suit "clubs"];
-        elseif cy(1) >= 14 && cy(1) <= 26
-            Your_cards_suit = [Your_cards_suit "hearts"];
-        elseif cy(1) >= 27 && cy(1) <= 39
-            Your_cards_suit = [Your_cards_suit "diamonds"];
+        if Deck(cy) == "1"
+           	Deck(cy) = "Ace";
+        elseif Deck(cy) == "11"
+            Deck(cy) = "J";
+        elseif Deck(cy) == "12"
+            Deck(cy) = "Q";
+        elseif Deck(cy) == "13"
+             Deck(cy) = "K";
+        end
+        drawn_equal_your = ismember(Your_cards, Deck(cy)); %determines if new card is eq to any cards in current deck
+        if sum(drawn_equal_your) > 0 %your new card matches one of your old ones
+            Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
+            RenderCardsFaceUp(Your_cards, YourCards, window);
+            RenderCardsFaceDown(CP_cards, window)
+            DrawFormattedText(window, 'You drew a match!', 'center', 'center', black);
+            Screen('Flip', window)
+            WaitSecs(1.5)
+            e = find(drawn_equal_your, 1); %returns first index in Your deck where value ~= 0
+            YourPoints = YourPoints + 1;
+            Your_cards_num(e)  = [];
+            Your_cards_suit(e) = [];
+            Your_cards(e) = [];
+            Deck(cy) = [];
+            Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
+            RenderCardsFaceUp(Your_cards, YourCards, window); %TAG
+            RenderCardsFaceDown(CP_cards, window)
+            Screen('Flip', window)
         else
-            Your_cards_suit = [Your_cards_suit "spades"];
+            Your_cards = [Your_cards Deck(cy)]; %concat deck w new card
+            Your_cards_num = str2double(Your_cards);
+            if cy(1) <= 13
+                Your_cards_suit = [Your_cards_suit "clubs"];
+            elseif cy(1) >= 14 && cy(1) <= 26
+                Your_cards_suit = [Your_cards_suit "hearts"];
+            elseif cy(1) >= 27 && cy(1) <= 39
+                Your_cards_suit = [Your_cards_suit "diamonds"];
+            else
+                Your_cards_suit = [Your_cards_suit "spades"];
+            end
+            if Your_cards(length(Your_cards)) == "1"
+                Your_cards(length(Your_cards)) = "Ace";
+            elseif Your_cards(length(Your_cards)) == "11"
+                Your_cards(length(Your_cards)) = "J";
+            elseif Your_cards(length(Your_cards)) == "12"
+                Your_cards(length(Your_cards)) = "Q";
+            elseif Your_cards(length(Your_cards)) == "13"
+                Your_cards(length(Your_cards)) = "K";
+            end
+            Deck(cy) = [];
+            YourCards = append(Your_cards,Your_cards_suit);
         end
-        if Your_cards(length(Your_cards)) == "1"
-            Your_cards(length(Your_cards)) = "Ace";
-        elseif Your_cards(length(Your_cards)) == "11"
-            Your_cards(length(Your_cards)) = "J";
-        elseif Your_cards(length(Your_cards)) == "12"
-            Your_cards(length(Your_cards)) = "Q";
-        elseif Your_cards(length(Your_cards)) == "13"
-            Your_cards(length(Your_cards)) = "K";
-        end
-        YourCards = append(Your_cards,Your_cards_suit);
     end
     
     %%% CP Turn
     CP_equal = ismember(CP_cards_num(1), Your_cards_num); %CP asks if player has their first card, generates boolean matrix
-    CPPoints = 0;
     if sum(CP_equal) ~= 0
         Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
         RenderCardsFaceUp(Your_cards, YourCards, window);
@@ -234,27 +264,53 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         Screen('Flip', window)
         WaitSecs(1.5)
         cdcp =  randperm(length(Deck),1);
-        CP_cards = [CP_cards Deck(cdcp)]; %concat deck w new card
-        CP_cards_num = str2double(CP_cards);
-        Deck(cdcp) = [];
-        if cdcp(1) <= 13
-            CP_cards_suit= [CP_cards_suit "clubs"];
-        elseif cdcp(1) >= 14 && cdcp(1) <= 26
-            CP_cards_suit= [CP_cards_suit "hearts"];
-        elseif cdcp(1) >= 27 && cdcp(1) <= 39
-            CP_cards_suit= [CP_cards_suit "diamonds"];
+        drawn_equal_CP = ismember(CP_cards, Deck(cdcp))
+        if sum(drawn_equal_CP) > 0 %CP new card matches one of its old ones
+            Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
+            RenderCardsFaceUp(Your_cards, YourCards, window);
+            RenderCardsFaceDown(CP_cards, window)
+            DrawFormattedText(window, 'CP drew a match!', 'center', 'center', black);
+            Screen('Flip', window)
+            WaitSecs(1.5)
+            ecp = find(drawn_equal_CP, 1); %returns first index in Your deck where value ~= 0
+            CPPoints = CPPoints + 1;
+            CP_cards_num(ecp)  = [];
+            CP_cards_suit(ecp) = [];
+            CP_cards(ecp) = [];
+            Deck(cdcp) = [];
+            Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
+            RenderCardsFaceUp(Your_cards, YourCards, window);
+            RenderCardsFaceDown(CP_cards, window)
+            Screen('Flip', window)
         else
-            CP_cards_suit= [CP_cards_suit "spades"];
+            CP_cards = [CP_cards Deck(cdcp)]; %concat deck w new card
+            CP_cards_num = str2double(CP_cards);
+            Deck(cdcp) = [];
+            if cdcp(1) <= 13
+                CP_cards_suit= [CP_cards_suit "clubs"];
+            elseif cdcp(1) >= 14 && cdcp(1) <= 26
+                CP_cards_suit= [CP_cards_suit "hearts"];
+            elseif cdcp(1) >= 27 && cdcp(1) <= 39
+                CP_cards_suit= [CP_cards_suit "diamonds"];
+            else
+                CP_cards_suit= [CP_cards_suit "spades"];
+            end
+            if CP_cards(length(CP_cards)) == "1"
+                CP_cards(length(CP_cards)) = "Ace";
+            elseif CP_cards(length(CP_cards)) == "11"
+                CP_cards(length(CP_cards)) = "J";
+            elseif CP_cards(length(CP_cards)) == "12"
+                CP_cards(length(CP_cards)) = "Q";
+            elseif CP_cards(length(CP_cards)) == "13"
+                CP_cards(length(CP_cards)) = "K";
+            end
+            CPCards = append(CP_cards,CP_cards_suit);
         end
-        if CP_cards(length(CP_cards)) == "1"
-            CP_cards(length(CP_cards)) = "Ace";
-        elseif CP_cards(length(CP_cards)) == "11"
-            CP_cards(length(CP_cards)) = "J";
-        elseif CP_cards(length(CP_cards)) == "12"
-            CP_cards(length(CP_cards)) = "Q";
-        elseif CP_cards(length(CP_cards)) == "13"
-            CP_cards(length(CP_cards)) = "K";
-        end
-        CPCards = append(CP_cards,CP_cards_suit);
     end
+    disp('Your Points:')
+    disp(YourPoints)
+    disp('CP Points:')
+    disp(CPPoints)
 end
+sca;
+
