@@ -126,7 +126,8 @@ Back = imread('backofcard.png');
 [k1, k2, k3] = size(Back);
 %RectB = CenterRectOnPointd([0, 0, 0.5*k1, 0.5*k2], r, 900);
 
-
+YourPoints = 0;
+CPPoints = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -153,9 +154,8 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
     else
         input = str2num(input);
     end
-    input_equal_CP = ismember(input, CP_cards_num); %determines whether input has equivalent value in CP?s cards, output matrix
-    input_equal_Your = ismember(input, Your_cards_num); %determines where input has equivalent value in Your cards, output matrix
-    YourPoints = 0;
+    input_equal_CP = ismember(CP_cards_num, input); %determines whether input has equivalent value in CP?s cards, output matrix
+    input_equal_Your = ismember(Your_cards_num, input); %determines where input has equivalent value in Your cards, output matrix
     if sum(input_equal_CP) > 0 %your card matches one of CP's cards
         Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
         RenderCardsFaceUp(Your_cards, YourCards, window);
@@ -204,12 +204,12 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck)
         elseif Your_cards(length(Your_cards)) == "13"
             Your_cards(length(Your_cards)) = "K";
         end
+        %%%
         YourCards = append(Your_cards,Your_cards_suit);
     end
     
     %%% CP Turn
     CP_equal = ismember(CP_cards_num(1), Your_cards_num); %CP asks if player has their first card, generates boolean matrix
-    CPPoints = 0;
     if sum(CP_equal) ~= 0
         Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
         RenderCardsFaceUp(Your_cards, YourCards, window);
