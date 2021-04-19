@@ -132,15 +132,13 @@ CPPoints = 0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACTUAL GAME CODE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck) || YourPoints <=5 || CPPoints <=5
-    
+while YourPoints < 5 || CPPoints < 5 %~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck) ||   
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%% DISPLAYS CARDS IN ORIGINAL DECK %%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     Screen('DrawTexture', window, imageTexture_table, [], [0, 0, screenXpixels, screenYpixels], 0);
     RenderCardsFaceUp(Your_cards, YourCards, window);
     RenderCardsFaceDown(CP_cards, window)
-    
     %%% Your turn%%%%
     input = GetEchoString(window, 'What is the name of the card that you want?', 45, 800, black, white);
     if  strcmp(input, 'jack') == 1 || strcmp(input, 'Jack') == 1 || strcmp(input, 'J') == 1 || strcmp(input, 'j') == 1
@@ -309,12 +307,10 @@ while ~isempty(YourCards) && ~isempty(CPCards) && ~isempty(Deck) || YourPoints <
             CPCards = append(CP_cards,CP_cards_suit);
         end
     end
+    disp('Your Points:')
+    disp(YourPoints)
+    disp('CP Points:')
+    disp(CPPoints)
 end
-sca
-if YourPoints < CPPoints
-    disp('You win! Nice job!')
-elseif CPPoints > YourPoints
-    disp('CP wins! Good try.')
-else
-    disp('Tie!')
-end
+sca;
+
