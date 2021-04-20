@@ -30,6 +30,7 @@ WaitSecs(2)
 
 % % MOUSE usage SETUP!!!
 
+
 % Text Setup (size and font) 
 Screen('TextSize', window, 85);
 % Setup the text font
