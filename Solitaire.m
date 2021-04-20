@@ -25,20 +25,23 @@ Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, scre
 WaitSecs(2)
 % DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
 % WaitSecs(2)
-% 
-% SOUNDS SETUP
+ 
+% SOUNDS SETUP (?)
+
+% % MOUSE usage SETUP!!!
 
 % Text Setup (size and font) 
 Screen('TextSize', window, 85);
 % Setup the text font
 Screen('TextFont', window,'Euphemia UCAS');
 
-% CREATE DECK --- as a row vector from the 4 suits (to keep track of card color and suit) 
+% CREATE DECK --- as a row vector from the 4 suits (to keep track of card
+% color and suit)
 hearts = 101:113; % Color: RED
 spades = 201:213; % BLACK
-clubs = 301:313; % BLACK
-diamonds = 401:413; % RED
-full_deck = [hearts,spades,clubs,diamonds];         %NOTE TO SELF: is it better to write it this way or the way in the line below? 
+diamonds = 301:313; % RED
+clubs = 401:413; % BLACK
+full_deck = [hearts,spades,diamonds,clubs];         %NOTE TO SELF: is it better to write it this way or the way in the line below? 
 % card_deck = [101:113, 201:213, 301:313, 401:413];
 
 % Setup the text size
@@ -60,7 +63,13 @@ while game == true
     DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
     Screen('Flip', window);
     WaitSecs(3);
-   sca;
+    
+    %DEAL STARTING CARD POSITIONS 
+    
+    
+   
+   
+   %DEFINE ACCEPTABLE MOVES 
    
 end
 
