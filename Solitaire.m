@@ -21,9 +21,9 @@ ifi = Screen('GetFlipInterval', window); % get flip interval
 
 % SET BACKGROUND to be the solitaire background
 background = imread('SolitaireBackground.png');             % make the background the Solitaire background image
-%Background_texture = Screen('MakeTexture', window, background);
-%Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
-%WaitSecs(2)
+Background_texture = Screen('MakeTexture', window, background);
+Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
+WaitSecs(2)
 DrawFormattedText(window, 'Ready to Play?', 'center', 'center', white);
 WaitSecs(2)
 
@@ -46,6 +46,7 @@ while game == true
     DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
     Screen('Flip', window);
     WaitSecs(3);
+   sca;
    
 end
 
