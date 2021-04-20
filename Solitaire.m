@@ -15,7 +15,6 @@ grey = white / 2;    % NOTE TO SELF ---- DO YOU NEED THIS LINE?
 [window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey);
 
 % FLIPPING VARIABLES
-
 [screenXpixels, screenYpixels] = Screen('WindowSize', window); % gets size of the screen (for the size of the window)
 ifi = Screen('GetFlipInterval', window); % get flip interval 
 
@@ -23,16 +22,24 @@ ifi = Screen('GetFlipInterval', window); % get flip interval
 background = imread('SolitaireBackground.png');             % make the background the Solitaire background image
 Background_texture = Screen('MakeTexture', window, background);
 Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
-WaitSecs(2)
-DrawFormattedText(window, 'Ready to Play?', 'center', 'center', white);
-WaitSecs(2)
+%WaitSecs(2)
+% DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
+% WaitSecs(2)
+% 
+% SOUNDS SETUP
+
+% Text Setup (size and font) 
+Screen('TextSize', window, 85);
+% Setup the text font
+Screen('TextFont', window,'Euphemia UCAS');
 
 % CREATE DECK --- as a row vector from the 4 suits (to keep track of card color and suit) 
 hearts = 1:13; % Color: RED
 spades = 1:13; % BLACK
 clubs = 1:13; % BLACK
 diamonds = 1:13; % RED
-full_deck = [hearts,spades,clubs,diamonds];
+full_deck = [hearts;spades;clubs;diamonds];
+card_deck = [101:113, 201:213, 301:313, 401:413];
 
 % Setup the text size
 Screen('TextSize', window, 65);
@@ -42,8 +49,15 @@ Screen('TextFont', window,'Euphemia UCAS');
 %initialize game (variable) 
 game = true; 
 while game == true
+    WaitSecs(3);
     %%% DISPLAY GAME INSTRUCTIONS %%% 
-    DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
+    DrawFormattedText(window, 'Lets Play Solitaire)!', 'center', 'center', white);
+    Screen('Flip', window);
+    WaitSecs(3);
+    DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
+    Screen('Flip', window);
+    WaitSecs(3);
+    DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
     Screen('Flip', window);
     WaitSecs(3);
    sca;
