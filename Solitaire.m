@@ -22,7 +22,7 @@ ifi = Screen('GetFlipInterval', window); % get flip interval
 background = imread('SolitaireBackground.png');             % make the background the Solitaire background image
 Background_texture = Screen('MakeTexture', window, background);
 Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
-%WaitSecs(2)
+WaitSecs(2)
 % DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
 % WaitSecs(2)
 % 
@@ -34,11 +34,12 @@ Screen('TextSize', window, 85);
 Screen('TextFont', window,'Euphemia UCAS');
 
 % CREATE DECK --- as a row vector from the 4 suits (to keep track of card color and suit) 
-hearts = 1:13; % Color: RED
-spades = 1:13; % BLACK
-clubs = 1:13; % BLACK
-diamonds = 1:13; % RED
-full_deck = [hearts;spades;clubs;diamonds];
+hearts = 101:113; % Color: RED
+spades = 201:213; % BLACK
+clubs = 301:313; % BLACK
+diamonds = 401:413; % RED
+full_deck = [hearts,spades,clubs,diamonds];         %NOTE TO SELF: do you need
+%%%this? 
 card_deck = [101:113, 201:213, 301:313, 401:413];
 
 % Setup the text size
