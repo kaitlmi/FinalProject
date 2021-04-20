@@ -21,7 +21,7 @@ ifi = Screen('GetFlipInterval', window); % get flip interval
 % SET BACKGROUND to be the solitaire background
 background = imread('SolitaireBackground.png');             % make the background the Solitaire background image
 Background_texture = Screen('MakeTexture', window, background);
-Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
+
 WaitSecs(2)
 % DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
 % WaitSecs(2)
@@ -55,29 +55,45 @@ Screen('TextSize', window, 65);
 % Setup the text font
 Screen('TextFont', window,'Euphemia UCAS');
 
+%%% DISPLAY GAME INSTRUCTIONS %%% 
+Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
+DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
+Screen('Flip', window);
+WaitSecs(2);
+Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
+DrawFormattedText(window, 'GAME INSTRUCTIONS(1)!', 'center', 'center', white);
+Screen('Flip', window);
+WaitSecs(3);
+Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
+DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
+Screen('Flip', window);
+WaitSecs(3);
 
-   %%% DISPLAY GAME INSTRUCTIONS %%% 
-    DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
-    Screen('Flip', window);
-    WaitSecs(2);
-    DrawFormattedText(window, 'GAME INSTRUCTIONS(1)!', 'center', 'center', white);
-    Screen('Flip', window);
-    WaitSecs(3);
-    DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
-    Screen('Flip', window);
-    WaitSecs(3);
-    
-    %DEAL STARTING CARD POSITIONS
-    %SET SPOTS FOR ALL POSSIBLE CARD POSITIONS 
-    tabl_up = zeros(13,7); 
-    tabl_down = zeros(6,7);
-    for pile=1:6
-        tabl_down(1:pile,pile + 1) = randomized_deck(1:pile);
-        randomized_deck = randomized_deck(pile+1:end);
+%DEAL STARTING CARD POSITIONS
+%SET SPOTS FOR ALL POSSIBLE CARD POSITIONS 
+tabl_up = zeros(13,7); 
+tabl_down = zeros(6,7);
+for pile=1:6
+    tabl_down(1:pile,pile + 1) = randomized_deck(1:pile);
+    randomized_deck = randomized_deck(pile+1:end);
     end
     tabl_down
     randomized_deck
     
+Screen('Flip', window);      
+Screen('DrawTexture', window, Background_texture, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image   
+AceC = imread('ace_of_clubs.png');
+[j1, j2, j3] = size(AceC);
+    Back = imread('backofcard.png');
+    imageTexture_Back = Screen('MakeTexture', window, Back);
+ for n = 1:length(tabl_down)  %%%% this chunk of code keeps CP's cards at the bottom of the screen
+     r = 200 + (n*100);
+        RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], 100, r);
+        Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
+        WaitSecs(5);
+ end
+ Screen('Flip', window);
+
     for pile=1:7
         tabl_up(1,pile) = randomized_deck(1);
         randomized_deck = randomized_deck(2:end);
@@ -93,7 +109,7 @@ game = true;
 while game == true
  
    %DEFINE ACCEPTABLE MOVES 
-   
+   sca
 end
 
 Screen('Flip', window);
