@@ -16,20 +16,20 @@ black = BlackIndex(screenNumber);
 grey = white / 2;
 [window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey);
 
-%variables for flipping
+%flipping variables
 [~, ~] = Screen('WindowSize', window);
 ifi = Screen('GetFlipInterval', window);
 rr = FrameRate(window);
 [screenXpixels, screenYpixels] = Screen('WindowSize', window); % sets size of the window to that of the screen
 ifi = Screen('GetFlipInterval', window); % get flip interval 
 
-% make background card table 
-background = imread('SolitaireBackground.jpg'); % make the background the Solitaire background image
-imageTexture_Background = Screen('MakeTexture', window, background);
-Screen('DrawTexture', window, imageTexture_Background, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
-WaitSecs(5)
-DrawFormattedText(window, 'Ready to Play?', 'center', 'center', white);
-WaitSecs(1)
+% set background to be the solitaire background
+background = imread('SolitaireBackground.png');             % make the background the Solitaire background image
+Background = Screen('MakeTexture', window, background);
+Screen('DrawTexture', window, Background, [], [0, 0, screenXpixels, screenYpixels], 0); % Sets up card table image
+WaitSecs(2)
+
+
 
 
 %create the deck as a row vector from the 4 suits (to keep track of card color and suit) 
@@ -39,6 +39,17 @@ clubs = 1:13; % BLACK
 diamonds = 1:13; % RED
 full_deck = [hearts,spades,clubs,diamonds];
 
-Screen('DrawTexture', window, imageTexture_Background, [], [0, 0, screenXpixels, screenYpixels], 0);
+
+
+%initialize game (variable) 
+game = true; 
+
+while game == true
+    
+    
+end
+DrawFormattedText(window, 'Ready to Play?', 'center', 'center', white);
+WaitSecs(2)
+
 
    
