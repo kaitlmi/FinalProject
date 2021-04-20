@@ -38,9 +38,8 @@ hearts = 101:113; % Color: RED
 spades = 201:213; % BLACK
 clubs = 301:313; % BLACK
 diamonds = 401:413; % RED
-full_deck = [hearts,spades,clubs,diamonds];         %NOTE TO SELF: do you need
-%%%this? 
-card_deck = [101:113, 201:213, 301:313, 401:413];
+full_deck = [hearts,spades,clubs,diamonds];         %NOTE TO SELF: is it better to write it this way or the way in the line below? 
+% card_deck = [101:113, 201:213, 301:313, 401:413];
 
 % Setup the text size
 Screen('TextSize', window, 65);
@@ -49,13 +48,13 @@ Screen('TextFont', window,'Euphemia UCAS');
 
 %initialize game (variable) 
 game = true; 
+
 while game == true
-    WaitSecs(3);
     %%% DISPLAY GAME INSTRUCTIONS %%% 
-    DrawFormattedText(window, 'Lets Play Solitaire)!', 'center', 'center', white);
+    DrawFormattedText(window, 'Lets Play Solitaire!', 'center', 'center', white);
     Screen('Flip', window);
-    WaitSecs(3);
-    DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
+    WaitSecs(2);
+    DrawFormattedText(window, 'GAME INSTRUCTIONS(1)!', 'center', 'center', white);
     Screen('Flip', window);
     WaitSecs(3);
     DrawFormattedText(window, 'GAME INSTRUCTIONS(2)!', 'center', 'center', white);
