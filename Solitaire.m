@@ -86,7 +86,8 @@ AceC = imread('ace_of_clubs.png');
 [j1, j2, j3] = size(AceC);
     Back = imread('backofcard.png');
     imageTexture_Back = Screen('MakeTexture', window, Back);
- for n = 1:length(tabl_down)  %%%% this chunk of code keeps CP's cards at the bottom of the screen
+ 
+    for n = 1:length(tabl_down)  %%%% this chunk of code keeps CP's cards at the bottom of the screen
      r = 200 + (n*100);
         RectB = CenterRectOnPointd([0, 0, 0.5*j1, 0.5*j2], 100, r);
         Screen('DrawTexture', window, imageTexture_Back, [], RectB, 0);
