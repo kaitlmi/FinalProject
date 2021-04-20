@@ -35,7 +35,7 @@ diamonds = 1:13; % RED
 full_deck = [hearts,spades,clubs,diamonds];
 
 % Setup the text size
-Screen('TextSize', window, 65);
+Screen('TextSize', window, 85);
 % Setup the text font
 Screen('TextFont', window,'Euphemia UCAS');
 
@@ -47,7 +47,7 @@ while game == true
     Screen('Flip', window);
     WaitSecs(3);
    sca;
-   
+  
 end
 
 Screen('Flip', window);
