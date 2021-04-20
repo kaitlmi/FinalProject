@@ -12,7 +12,7 @@ screenNumber = max(screens);
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
 grey = white / 2;    % NOTE TO SELF ---- DO YOU NEED THIS LINE? 
-[window, windowRect] = PsychImaging('OpenWindow', screenNumber, background);
+[window, windowRect] = PsychImaging('OpenWindow', screenNumber, grey);
 
 % FLIPPING VARIABLES
 
