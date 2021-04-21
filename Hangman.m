@@ -1,3 +1,6 @@
+% Hello I'm Susan and for this project, I coded the entirety of the
+% following code. 
+
 % Boilerplate Setup 
 sca;
 clc;
