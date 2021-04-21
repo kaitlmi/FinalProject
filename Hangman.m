@@ -1,5 +1,6 @@
 % Hello I'm Susan and for this project, I coded the entirety of the
-% following code. 
+% following code. I didn't log hours very well on the code but I logged
+% some relative hours that I put in the final project proposal. 
 
 % Boilerplate Setup 
 sca;
