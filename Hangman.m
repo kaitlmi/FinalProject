@@ -4,7 +4,7 @@ clc;
 close all;
 clearvars;
 PsychDefaultSetup(2);
-Screen('Preference', 'SkipSyncTests', 1);
+Screen('Preference', 'SkipSyncTests', 0);
 
 % Setting up the screens 
 screens = Screen('Screens');
@@ -32,7 +32,7 @@ PsychPortAudio('FillBuffer', pahandle2, [wavedata2, wavedata2]');
 blackboard = imread('Blackboard.png'); % blackboard background
 Blackboard = Screen('MakeTexture', window, blackboard);
 
-% Setting up the 1, 2, and 3 key on the keyboard for KbCheck.
+% Setting up the 1-5 keys and y and n on the keyboard for KbCheck. 
 KbName('UnifyKeyNames')
 oneKey = KbName('1!');
 twoKey = KbName('2@');
@@ -60,13 +60,12 @@ while game == true
 
     % Setting up the words to select a category to play from. 
     DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', ... 
-        '\n 3. Punk Pop/Rock Anthems 2000s', '\n 4. Difficult Hangman words', '\n 5. Famous Book Series'], 'center', 'center', white);
+        '\n 3. Punk Pop/Rock Anthems 2000s', '\n 4. Difficult Hangman nouns', '\n 5. Famous Book Series'], 'center', 'center', white);
     Screen('Flip', window);
-
 
     move_forward = false; % whether the program can move forward from setting up the puzzles. 
     while move_forward == false % while move_forward is false
-        % Check whether 1, 2, or 3 is pressed on the keyboard. 
+        % Check what key is pressed on the keyboard. 
         [secs, keyCode, deltaSecs] = KbWait;    
         if keyCode(oneKey) % If the 1 key is pressed
             % Setting up the Puzzles for category: US Vacation spots
@@ -103,34 +102,34 @@ while game == true
             Puzzle_1 = 'the middle';  
             Puzzle_2 = 'dirty little secret';                               
             Puzzle_3 = 'all the small things';   
-            Puzzle_4 = 'sugar were going down';                       
+            Puzzle_4 = 'i dont care';                       
             Puzzle_5 = 'american idiot';                              
             Puzzle_6 = 'mr brightside';                       
             Puzzle_7 = 'check yes juliet';  
             Puzzle_8 = 'misery business';               
             Puzzle_9 = 'im not okay';    
-            Puzzle_10 = 'i write sins not tragedies';
+            Puzzle_10 = 'stacys mom';
             
-            move_forward = true;
+            move_forward = true; % Done setting up the puzzles. 
         
         elseif keyCode(fourKey) % If the 4 key is pressed
-            % Setting up the Puzzles for category: Difficult Hangman Words
+            % Setting up the Puzzles for category: Difficult Hangman Nouns
             
-            Puzzle_1 = 'quixotic';
+            Puzzle_1 = 'rhubarb';
             Puzzle_2 = 'gazebo';
             Puzzle_3 = 'espionage';
-            Puzzle_4 = 'whizzing';
+            Puzzle_4 = 'mnemonic';
             Puzzle_5 = 'jukebox';
             Puzzle_6 = 'quorum';
-            Puzzle_7 = 'jazzy';
+            Puzzle_7 = 'zipper';
             Puzzle_8 = 'wristwatch';
-            Puzzle_9 = 'awkward';
+            Puzzle_9 = 'oxygen';
             Puzzle_10 = 'syndrome';
             
-            move_forward = true;
+            move_forward = true; % Done setting up the puzzles.
             
         elseif keyCode(fiveKey) % If the 5 key is pressed
-            % Setting up the Puzzles for category: Famous Twitch Streamers
+            % Setting up the Puzzles for category: Famous Book Series
             Puzzle_1 = 'harry potter';
             Puzzle_2 = 'the hunger games';
             Puzzle_3 = 'mortal instruments';
@@ -140,14 +139,16 @@ while game == true
             Puzzle_7 = 'divergent';
             Puzzle_8 = 'magic tree house';
             Puzzle_9 = 'chronicles of narnia';
-            Puzzle_10 = 'robert langdon';
+            Puzzle_10 = 'robert langdon'; 
             
-            move_forward = true;
-        elseif ~keyCode(oneKey) && ~keyCode(twoKey) && ~keyCode(threeKey)
-            DrawFormattedText(window, 'Wrong Key. Press 1, 2, or 3', 'center', 'center', white);
+            move_forward = true; % Done setting up the puzzles. 
+            
+        elseif ~keyCode(oneKey) && ~keyCode(twoKey) && ~keyCode(threeKey) && ~keyCode(fourKey) && ~keyCode(fiveKey)
+            DrawFormattedText(window, 'Wrong Key. Press 1, 2, 3, 4, or 5', 'center', 'center', white);
             Screen('Flip', window);
             WaitSecs(2);
-            DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', '\n 3. Punk Pop/Rock Anthems 2000s'], 'center', 'center', white);
+            DrawFormattedText(window, ['Select a category to play by' '\n pressing the appropriate number', '\n\n 1. US Vacation Spots', '\n 2. Dishes from around the World', ... 
+            '\n 3. Punk Pop/Rock Anthems 2000s', '\n 4. Difficult Hangman nouns', '\n 5. Famous Book Series'], 'center', 'center', white);
             Screen('Flip', window);     
         end
     end
@@ -158,7 +159,6 @@ while game == true
     Puzzle_Number = randperm(10,3);
 
     round = 1; % the number of the round
-
     placement = 1; % the position number in the vector, Puzzle_Number
     rounds_won = 0; % Counts the number of rounds the player has won. 
 
@@ -184,7 +184,7 @@ while game == true
         elseif Puzzle_Number(placement) == 9
             Puzzle = Puzzle_9; % Set variable Puzzle to be equal to Puzzle_9
         elseif Puzzle_Number(placement) == 10
-            Puzzle = Puzzle_10;
+            Puzzle = Puzzle_10; % Set variable Puzzle to be equal to Puzzle_10
         end
 
         %Create variable Puzzle_spaces which is converted into the cell format. 
@@ -209,22 +209,22 @@ while game == true
         Puzzle_spaces_new = Puzzle_spaces;
         % Creates a string with words: 'Guessed:'
         string = 'Guessed:';
-        % Setting up the visual of the noose    
+        % Setting up the visual of the noose with a blackboard background   
         Screen('DrawTexture', window, Blackboard, [], [0 0 screenXpixels screenYpixels], 0);
         Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
         Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
         Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
          % Setting up the visual of the puzzle
         Screen('TextSize', window, 70);   
-        DrawFormattedText(window, Puzzle_spaces_new,.10*screenXpixels, 'center', white);
+        DrawFormattedText(window, Puzzle_spaces_new,.05*screenXpixels, 'center', white);
         % Setting up instructions for player 
         DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
         % Setting up the letters guessed corner
         Screen('TextSize', window, 50);
-        DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);
+        DrawFormattedText(window, string ,0.05*screenXpixels, 0.9*screenYpixels, white);
         Screen('Flip', window);
 
-        % Enter a while loop
+        % Enter a while loop for guessing letters
         while guess_wrong <= 6 % While the number of wrong guesses is less than or equal to 6
             % Synchronize GetKbChar
             FlushEvents;
@@ -240,15 +240,63 @@ while game == true
             end
 
             if Puzzle_spaces_new == Puzzle_letters % if Puzzle_spaces_new is equal to the original puzzle.
-                % Play right buzzer sound 
+                % Play right buzzer sound              
                 PsychPortAudio('Start', pahandle1);
                 PsychPortAudio('Stop', pahandle1, 1,1);
+                % Setup the hangman noose
+                Screen('DrawTexture', window, Blackboard, [], [0 0 screenXpixels screenYpixels], 0);
+                Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
+                Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
+                Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
+                % Setup the visual of Puzzle_spaces_new.
+                Screen('TextSize', window, 70);
+                DrawFormattedText(window, Puzzle_spaces_new, .05*screenXpixels, 'center', white);
+                % Setup the instructions message. 
+                DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
+                % Setup the Guessed letters corner. 
+                Screen('TextSize', window, 50);
+                DrawFormattedText(window, string,0.05*screenXpixels, 0.9*screenYpixels, white);               
+                if guess_wrong == 0 % if guess_wrong is equal to zero        
+                    Screen('Flip', window); % 
+                elseif guess_wrong == 1 % if guess_wrong is equal to 1
+                    % Keep the head of the hangman
+                    Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                    Screen('Flip', window);
+                elseif guess_wrong == 2 % if guess_wrong is equal to 2
+                    % Keep the head+body of the hangman
+                    Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                    Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
+                    Screen('Flip', window);
+                elseif guess_wrong == 3 % if guess_wrong is equal to 3
+                    % Keep the head+body+left arm of the hangman
+                    Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                    Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
+                    Screen('DrawLines', window, [0.52*screenXpixels, 0.6*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
+                    Screen('Flip', window);
+                elseif guess_wrong == 4 % if guess_wrong is equal to 4
+                    % Keep the head+body+left+right arm of the hangman
+                    Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                    Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
+                    Screen('DrawLines', window, [0.52*screenXpixels, 0.6*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
+                    Screen('DrawLines', window, [0.6*screenXpixels, 0.68*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
+                    Screen('Flip', window);
+                elseif guess_wrong == 5 % if guess_wrong is equal to 5
+                    % Keep the head+body+left+right arm+left leg of the hangman
+                    Screen('DrawDots', window, [0.6*screenXpixels 0.45*screenYpixels],130, white);
+                    Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.40*screenYpixels, 0.8*screenYpixels], 5);
+                    Screen('DrawLines', window, [0.52*screenXpixels, 0.6*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
+                    Screen('DrawLines', window, [0.6*screenXpixels, 0.68*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
+                    Screen('DrawLines', window, [0.55*screenXpixels, 0.6*screenXpixels ; 0.9*screenYpixels, 0.8*screenYpixels], 5);
+                    Screen('Flip', window);
+                end
+                
                 rounds_won = rounds_won + 1; % Add one to rounds_won
+                WaitSecs(2); 
                 % Congratulatory message to the player 
                 Screen('TextSize', window, 70);
                 DrawFormattedText(window, ['Good job! You guessed the clue!', '\n Press Enter to continue'], 'center', 'center', white);
                 Screen('Flip', window);
-                WaitSecs(3); % Show for 3 seconds
+                WaitSecs(3); 
                 guess_wrong = 7; % Have guess_wrong equal to 7 to exit the while loop. 
 
             elseif Puzzle_spaces_new == Puzzle_spaces % When the wrong letter is guessed. 
@@ -261,14 +309,14 @@ while game == true
                 PsychPortAudio('Start', pahandle2);
                 PsychPortAudio('Stop', pahandle2, 1,1)
                 WaitSecs(1); % Wait for 1 seconds
-                % Setup the hangman noose 
+                % Setup the hangman noose with the background 
                 Screen('DrawTexture', window, Blackboard, [], [0 0 screenXpixels screenYpixels], 0);
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, 0.25*screenYpixels], 5);
                 Screen('DrawLines', window, [0.9*screenXpixels, 0.9*screenXpixels ; 0.25*screenYpixels, screenYpixels], 5);
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
                 % Setup the visual of Puzzle_spaces_new.
                 Screen('TextSize', window, 70);
-                DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
+                DrawFormattedText(window, Puzzle_spaces_new, .05*screenXpixels, 'center', white);
                 % Setup the instructions message. 
                 DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
                 % Setup the Guessed letters corner. 
@@ -331,7 +379,7 @@ while game == true
                 Screen('DrawLines', window, [0.6*screenXpixels, 0.6*screenXpixels ; 0.25*screenYpixels, 0.40*screenYpixels], 5);
                 % Setup the visual of Puzzle_spaces_new.
                 Screen('TextSize', window, 70);
-                DrawFormattedText(window, Puzzle_spaces_new, .10*screenXpixels, 'center', white);
+                DrawFormattedText(window, Puzzle_spaces_new, .05*screenXpixels, 'center', white);
                 % Setup the instructions message. 
                 DrawFormattedText(window, 'Guess a letter', 'center', .10*screenYpixels, white);
                 % Setup the Guessed letters corner. 
@@ -372,7 +420,8 @@ while game == true
                     Screen('DrawLines', window, [0.52*screenXpixels, 0.6*screenXpixels ; 0.6*screenYpixels, 0.64*screenYpixels], 5);
                     Screen('DrawLines', window, [0.6*screenXpixels, 0.68*screenXpixels ; 0.64*screenYpixels, 0.6*screenYpixels], 5);
                     Screen('DrawLines', window, [0.55*screenXpixels, 0.6*screenXpixels ; 0.9*screenYpixels, 0.8*screenYpixels], 5);
-                    Screen('Flip', window);               
+                    Screen('Flip', window);
+                
                 end
                 Puzzle_spaces = Puzzle_spaces_new; % Update Puzzle_spaces to include the new letters
             end
@@ -391,22 +440,31 @@ while game == true
     DrawFormattedText(window, ['You won ' num2str(rounds_won) ' rounds.'], 'center', 'center', white);
     Screen('Flip', window);
     WaitSecs(3);
+    get_input = true; % Setting up get_input to be true
     if rounds_won < 2 % if rounds_won is less than 2
         % Ending message for losing against the computer
         DrawFormattedText(window, ['Unfortunately you lost against' '\n the computer'], 'center', 'center', white);
         Screen('Flip', window);
         WaitSecs(3);
-        % Getting input whether to play again or not
-        input = GetEchoString(window, 'Would you like to play again? y/n', 100 , 450, white);
-        % If yes
-        if input == 'Y' || input == 'y'
-            Screen('Flip', window);
-            WaitSecs(2);
-            continue
-        % If no
-        elseif input == 'N' || input == 'n'
-            game = false;
-        end    
+        while get_input == true
+            input = GetEchoString(window, 'Would you like to play again? y/n', 100, 450, white, black);
+            % If yes
+            if input == 'Y' || input == 'y' 
+                Screen('Flip', window);
+                WaitSecs(2);
+                get_input = false;
+            % If no
+            elseif input == 'N' || input == 'n'
+                game = false; % Set game to false to exit the while loop of the game
+                get_input = false;
+            elseif input ~= 'Y' || input ~= 'y' || input ~= 'N' || input ~= 'n'
+                Screen('Flip', window);
+                DrawFormattedText(window, 'Type either y or n then press enter.', 'center', 'center', white);
+                Screen('Flip', window);
+                WaitSecs(2);
+                Screen('Flip', window);
+            end
+        end
         
     elseif rounds_won > 1 % if rounds_won is greater than 1
         % Ending message for winning against the computer
@@ -416,14 +474,26 @@ while game == true
         DrawFormattedText(window, 'Congratulations!', 'center', 'center', white);
         Screen('Flip', window);
         WaitSecs(3);
-        input = GetEchoString(window, 'Would you like to play again? y/n', 100, 450, white, black);
-        if input == 'Y' || input == 'y'
-            Screen('Flip', window);
-            WaitSecs(2);
-            continue
-        elseif input == 'N' || input == 'n'
-            game = false;
-        end          
+        % Getting input whether to play again or not
+        while get_input == true
+            input = GetEchoString(window, 'Would you like to play again? y/n', 100, 450, white, black);
+            % If yes
+            if input == 'Y' || input == 'y' 
+                Screen('Flip', window);
+                WaitSecs(2);
+                get_input = false;
+            % If no
+            elseif input == 'N' || input == 'n'
+                game = false; % Set game to false to exit the while loop of the game
+                get_input = false;
+            elseif input ~= 'Y' || input ~= 'y' || input ~= 'N' || input ~= 'n'
+                Screen('Flip', window);
+                DrawFormattedText(window, 'Type either y or n then press enter.', 'center', 'center', white);
+                Screen('Flip', window);
+                WaitSecs(2);
+                Screen('Flip', window);
+            end
+        end 
     end
 end
 
